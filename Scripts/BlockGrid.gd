@@ -14,7 +14,7 @@ func initialize_state():
 	red_block_cells[Vector2(2, 3)] = null
 	red_block_cells[Vector2(3, 3)] = null
 	red_block_cells[Vector2(3, 4)] = null
-	var red_block = { 
+	var red_block = {
 		"cells": red_block_cells,
 		"color": BlockLogic.BlockColor.RED
 	}
@@ -70,19 +70,21 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 		$AnimatedBlocks.add_child(animated_block)
 	next_block_state = new_state
 	$UpdateTimer.start()
-	
+
 func get_block_at_cursor(cursor_pos: Vector2):
 	return BlockLogic.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
-	
-func push_block(block_pos: Vector2, direction):	
+
+func push_block(block_pos: Vector2, direction):
 	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
+	if block_data["foundBlock"] == null: return
+
 	var pushed_data = BlockLogic.pushBlock(direction, block_data["foundBlock"], block_data["otherBlocks"])
 	move_blocks(pushed_data["movedBlocks"], pushed_data["finalBlocks"], direction)
 
 func animation_ended():
 	update_state()
 	emit_signal("push_ended")
-	
+
 func update_state():
 	$RedGrid.clear()
 	$BlueGrid.clear()
@@ -95,4 +97,4 @@ func update_state():
 	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
 	$YellowGrid.add_blocks(color_separated_new_state["yellowBlocks"])
 #	add_blocks(block_state)
-	
+
