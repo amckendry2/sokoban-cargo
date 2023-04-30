@@ -31,7 +31,7 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogic.fuseBlocks(block_state)
 	update_state()
-	
+
 func delete_block(coord: Vector2):
 	var block_to_delete = BlockLogic.findBlockAtPosition(coord, block_state)["foundBlock"]
 	block_state.erase(block_to_delete)
@@ -44,8 +44,6 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	$GreenGrid.clear_blocks(cleared_blocks_by_color["greenBlocks"])
 	$OrangeGrid.clear_blocks(cleared_blocks_by_color["yellowBlocks"])
 
-	# TODO(Julian): Some blocks become visually disconnected while being pushed.
-	# Could be an issue in BlockLogic or with (Dynamic)TileMap
 	for block in moved_blocks:
 		var animated_block = animated_block_group_scene.instance()
 		var block_material = shader_materials[block.color]
@@ -62,7 +60,7 @@ func get_block_at_cursor(cursor_pos: Vector2) -> bool:
 func push_block(block_pos: Vector2, direction):
 	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
 	if block_data["foundBlock"] == null: return false
-	
+
 	var available_cells = $LandGrids.get_available_land_cells()
 	var pushed_data = BlockLogic.pushBlock(direction, block_data["foundBlock"], block_data["otherBlocks"], available_cells)
 	move_blocks(pushed_data["movedBlocks"], pushed_data["finalBlocks"], direction)
