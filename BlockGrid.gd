@@ -57,7 +57,11 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 			direction_name = "MoveDown"
 		BlockLogic.MoveDirection.WEST:
 			direction_name = "MoveLeft"
-	clear_blocks(moved_blocks)
+	var cleared_blocks_by_color = BlockLogic.partitionTilesByColor(moved_blocks)
+	$RedGrid.clear_blocks(cleared_blocks_by_color["redBlocks"])
+	$BlueGrid.clear_blocks(cleared_blocks_by_color["blueBlocks"])
+	$GreenGrid.clear_blocks(cleared_blocks_by_color["greenBlocks"])
+	$YellowGrid.clear_blocks(cleared_blocks_by_color["yellowBlocks"])
 	for block in moved_blocks:
 		var animated_block = animated_block_group_scene.instance()
 		for cell in block["cells"]:
@@ -78,14 +82,17 @@ func push_block(block_pos: Vector2, direction):
 func animation_ended():
 	update_state()
 	emit_signal("push_ended")
-
 	
 func update_state():
-	clear()
+	$RedGrid.clear()
+	$BlueGrid.clear()
+	$GreenGrid.clear()
+	$YellowGrid.clear()
 	block_state = next_block_state
-	add_blocks(block_state)
+	var color_separated_new_state = BlockLogic.partitionTilesByColor(block_state)
+	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
+	$BlueGrid.add_blocks(color_separated_new_state["blueBlocks"])
+	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
+	$YellowGrid.add_blocks(color_separated_new_state["yellowBlocks"])
+#	add_blocks(block_state)
 	
-
-
-func _on_UpdateTimer_timeout():
-	pass # Replace with function body.
