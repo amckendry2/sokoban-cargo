@@ -144,7 +144,22 @@ static func intersectionDicts(dict1: Dictionary, dict2: Dictionary) -> Dictionar
 # Compute updated positions and groupings of blocks.
 #
 # `otherBlocks` is a set of blocks.
-static func pushBlock(direction, blockToPush, otherBlocks: Dictionary) -> Dictionary:
+# Returns a dictionary with two fields: "finalBlocks", containing the new
+# configuration of blocks, and "movedBlocks", containing the initial positions
+# (i.e. before the move) of blocks that moved.
+static func pushBlock(direction, blockToPush, otherBlocks: Dictionary, openSpaces: Dictionary) -> Dictionary:
+	# First test if we should be pushing the block at all.
+	if not isPushValid(direction, blockToPush, otherBlocks, openSpaces):
+		# Nope, just return the original state.
+		var newBlocks = otherBlocks.duplicate(true) # accumulator
+		newBlocks[blockToPush] = null
+		return {
+			"finalBlocks": newBlocks,
+			"movedBlocks": {}
+			}
+
+	# Looks good, now push the block.
+
 	# Queue of blocks to move
 	var blocksToMoveQueue = [blockToPush] # pop from front, push at back
 	# Record of original positions of moved blocks
@@ -196,6 +211,97 @@ static func pushBlock(direction, blockToPush, otherBlocks: Dictionary) -> Dictio
 		"finalBlocks": newBlocks,
 		"movedBlocks": movedBlocksInitAcc # original positions before move
 		}
+
+# Test whether a block can be pushed in a certain direction.
+static func isPushValid(direction, blockToPush, otherBlocks: Dictionary, openSpaces: Dictionary) -> bool:
+	match direction:
+		MoveDirection.EAST:
+			return isPushEastValid(blockToPush, otherBlocks, openSpaces)
+		MoveDirection.NORTH:
+			# rotate everything clockwise
+			var newBlockToPush = makeBlock(rotateCellsCW(blockToPush.cells), blockToPush.color)
+			var newOpenSpaces = rotateCellsCW(openSpaces)
+			var newOtherBlocks = {} # accumulator
+			for otherBlock in otherBlocks:
+				newOtherBlocks[makeBlock(rotateCellsCW(otherBlock.cells), otherBlock.color)] = null
+			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
+		MoveDirection.WEST:
+			# rotate everything 180 degrees
+			var newBlockToPush = makeBlock(rotateCells180(blockToPush.cells), blockToPush.color)
+			var newOpenSpaces = rotateCells180(openSpaces)
+			var newOtherBlocks = {} # accumulator
+			for otherBlock in otherBlocks:
+				newOtherBlocks[makeBlock(rotateCells180(otherBlock.cells), otherBlock.color)] = null
+			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
+		MoveDirection.SOUTH:
+			# rotate everything counterclockwise
+			var newBlockToPush = makeBlock(rotateCellsCCW(blockToPush.cells), blockToPush.color)
+			var newOpenSpaces = rotateCellsCCW(openSpaces)
+			var newOtherBlocks = {} # accumulator
+			for otherBlock in otherBlocks:
+				newOtherBlocks[makeBlock(rotateCellsCCW(otherBlock.cells), otherBlock.color)] = null
+			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
+		_:
+			assert(false, "ERROR: Invalid direction");
+			return false # to satisfy the "type checker"
+
+static func rotateCellsCCW(cells: Dictionary) -> Dictionary:
+	var newCells = {} # accumulator
+	for position in cells:
+		var newPosition = Vector2(-position[1], position[0])
+		newCells[newPosition] = null
+	return newCells
+
+static func rotateCellsCW(cells: Dictionary) -> Dictionary:
+	var newCells = {} # accumulator
+	for position in cells:
+		var newPosition = Vector2(position[1], -position[0])
+		newCells[newPosition] = null
+	return newCells
+
+static func rotateCells180(cells: Dictionary) -> Dictionary:
+	var newCells = {} # accumulator
+	for position in cells:
+		var newPosition = -position
+		newCells[newPosition] = null
+	return newCells
+
+static func isPushEastValid(blockToPush, otherBlocks: Dictionary, openSpaces: Dictionary) -> bool:
+	var blockToPush_cells_y = projectCells_y(blockToPush.cells)
+
+	# For each y-coordinate, perform a horizontal scan.
+	for y in blockToPush_cells_y:
+		# Find right-most coordinate of the block to be pushed
+		var blockToPush_max_x = null
+		for position in blockToPush.cells:
+			if position[1] == y:
+				blockToPush_max_x = max(blockToPush_max_x, position[0])
+
+		# Scan east from that right-most coordinate looking for a free spot.
+		var x = blockToPush_max_x + 1
+		while true:
+			var position = Vector2(x, y)
+			if not openSpaces.has(position):
+				# We haven't found a free spot yet and now we know there's no room
+				return false
+			if not isBlockAtPosition(position, otherBlocks):
+				# We found a free spot! This row is fine, so break out of the loop.
+				break
+			# Loop
+			x += 1
+	# We scanned every row and found an empty spot. The push looks good!
+	return true
+
+# Project onto the y-axis a set of 2D coordinates to create a set of 1D
+# coordinates.
+static func projectCells_y(cells: Dictionary) -> Dictionary:
+	var y_positions = {} # accumulator
+	for position in cells:
+		y_positions[position[1]] = null
+	return y_positions
+
+static func isBlockAtPosition(position, blocks: Dictionary) -> bool:
+	return findBlockAtPosition(position, blocks).foundBlock != null
 
 # Find a block from a set of blocks with a cell at the given position. If there
 # is such a block, returns that block, along with the set of blocks with that
