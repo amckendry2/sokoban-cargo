@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/AnimatedBlockGroup.gd" type="Script" id=1]
 [ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=2]
-[ext_resource path="res://Assets/Shaders/ChowderBlue.tres" type="Material" id=3]
+[ext_resource path="res://Assets/Shaders/ChowderRed.tres" type="Material" id=3]
 
 [node name="AnimatedBlockGroup" type="TileMap"]
 material = ExtResource( 3 )

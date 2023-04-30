@@ -1,6 +1,6 @@
 class_name BlockLogic extends Node2D
 
-enum BlockColor {GREEN, BLUE, YELLOW}
+enum BlockColor {GREEN, ORANGE, RED}
 
 static func getRandomColor():
 	var keys = BlockColor.keys()
@@ -322,18 +322,18 @@ static func findBlockAtPosition(position, blocks: Dictionary) -> Dictionary:
 # Separate a set of blocks by their color.
 static func partitionTilesByColor(blocks: Dictionary) -> Dictionary:
 	var greenBlocks = {}
-	var blueBlocks = {}
-	var yellowBlocks = {}
+	var orangeBlocks = {}
+	var redBlocks = {}
 	for block in blocks:
 		match block.color:
 			BlockColor.GREEN:
 				greenBlocks[block] = null
-			BlockColor.BLUE:
-				blueBlocks[block] = null
-			BlockColor.YELLOW:
-				yellowBlocks[block] = null
+			BlockColor.ORANGE:
+				orangeBlocks[block] = null
+			BlockColor.RED:
+				redBlocks[block] = null
 	return {
 		"greenBlocks": greenBlocks,
-		"blueBlocks": blueBlocks,
-		"yellowBlocks": yellowBlocks
+		"orangeBlocks": orangeBlocks,
+		"redBlocks": redBlocks
 		}
