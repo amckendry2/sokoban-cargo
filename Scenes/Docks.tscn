@@ -161,7 +161,6 @@ format = 1
 script = ExtResource( 2 )
 
 [node name="OrangeGrid" type="TileMap" parent="BlockGrid"]
-visible = false
 z_index = 1
 tile_set = ExtResource( 6 )
 format = 1
