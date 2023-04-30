@@ -1,4 +1,4 @@
-extends "res://Scripts/DynamicTileMap.gd"
+extends Node2D
 
 signal push_ended
 
