@@ -205,13 +205,14 @@ static func pushBlock(direction, blockToPush, otherBlocks: Dictionary, openSpace
 	# All movements have now been procesed. Collect all blocks and perform
 	# fusion.
 	var newBlocks = fuseBlocks(unionDicts(movedBlocksFinalAcc, unmovedBlocks))
+	var movedBlocks = fuseBlocks(movedBlocksInitAcc)
 
 	# Return the updated set of blocks, along with all the blocks that moved
 	# (in their unmerged form) for animation purposes.
 	return {
 		"pushSuccessful": true,
 		"finalBlocks": newBlocks,
-		"movedBlocks": movedBlocksInitAcc # original positions before move
+		"movedBlocks": movedBlocks # original positions before move
 		}
 
 # Test whether a block can be pushed in a certain direction.
