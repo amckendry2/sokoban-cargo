@@ -2,6 +2,10 @@ class_name BlockLogic extends Node2D
 
 enum BlockColor {RED, GREEN, BLUE, YELLOW}
 
+static func getRandomColor():
+	var keys = BlockColor.keys()
+	return BlockColor[keys[randi() % len(keys)]]
+
 enum MoveDirection {EAST, NORTH, WEST, SOUTH}
 
 static func directionToVec(direction):
@@ -25,6 +29,11 @@ static func directionToVec(direction):
 # Unsafe constructor.
 # Make a block from a contiguous set of cells. No check is performed for the
 # contiguousness of the cells.
+static func makeSingleCellBlock(cell: Vector2, color) -> Dictionary:
+	var cells = {}
+	cells[cell] = null
+	return { "cells": cells, "color": color }
+
 static func makeBlock(cells: Dictionary, color) -> Dictionary:
 	return { "cells": cells, "color": color }
 
