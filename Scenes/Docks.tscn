@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
 [ext_resource path="res://Assets/icon.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/SelectionGrid.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/BlockGrid.gd" type="Script" id=5]
+[ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -55,55 +56,7 @@ tracks/0/keys = {
 0/shapes = [  ]
 0/z_index = 0
 
-[sub_resource type="TileSet" id=4]
-0/name = "icon.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-
-[sub_resource type="TileSet" id=5]
-0/name = "icon.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-
-[sub_resource type="TileSet" id=6]
-0/name = "icon.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-
-[sub_resource type="TileSet" id=7]
+[sub_resource type="TileSet" id=8]
 0/name = "icon.png 0"
 0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )
@@ -121,6 +74,9 @@ tracks/0/keys = {
 
 [node name="PlayGrid" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 modulate = Color( 0.607843, 1, 0.65098, 0.196078 )
@@ -144,27 +100,61 @@ script = ExtResource( 5 )
 wait_time = 0.5
 one_shot = true
 
+[node name="LandGrids" type="Node" parent="BlockGrid"]
+__meta__ = {
+"_editor_description_": "Contains the grids that define what cells are \"land\""
+}
+
+[node name="LandGrid" type="TileMap" parent="BlockGrid/LandGrids"]
+tile_set = SubResource( 8 )
+format = 1
+tile_data = PoolIntArray( 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 655364, 0, 0, 655365, 0, 0, 655366, 0, 0, 655367, 0, 0, 655368, 0, 0, 655369, 0, 0, 655370, 0, 0, 655371, 0, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 786438, 0, 0, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 851974, 0, 0, 851975, 0, 0, 851976, 0, 0, 851977, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0 )
+
+[node name="BoatNorthGrid" type="TileMap" parent="BlockGrid/LandGrids"]
+tile_set = SubResource( 8 )
+format = 1
+tile_data = PoolIntArray( 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0 )
+
+[node name="BoatSouthGrid" type="TileMap" parent="BlockGrid/LandGrids"]
+tile_set = SubResource( 8 )
+format = 1
+tile_data = PoolIntArray( 786438, 0, 0, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 851974, 0, 0, 851975, 0, 0, 851976, 0, 0, 851977, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0 )
+
+[node name="BoatWestGrid" type="TileMap" parent="BlockGrid/LandGrids"]
+tile_set = SubResource( 8 )
+format = 1
+tile_data = PoolIntArray( 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0 )
+
+[node name="BoatEastGrid" type="TileMap" parent="BlockGrid/LandGrids"]
+tile_set = SubResource( 8 )
+format = 1
+tile_data = PoolIntArray( 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0 )
+
 [node name="RedGrid" type="TileMap" parent="BlockGrid"]
 modulate = Color( 1, 0.00392157, 0.00392157, 1 )
-tile_set = SubResource( 4 )
+z_index = 1
+tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 
 [node name="BlueGrid" type="TileMap" parent="BlockGrid"]
 modulate = Color( 0, 0.0823529, 0.980392, 1 )
-tile_set = SubResource( 5 )
+z_index = 1
+tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 
 [node name="GreenGrid" type="TileMap" parent="BlockGrid"]
 modulate = Color( 0.0235294, 0.584314, 0.0352941, 1 )
-tile_set = SubResource( 6 )
+z_index = 1
+tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 
 [node name="YellowGrid" type="TileMap" parent="BlockGrid"]
 modulate = Color( 0.964706, 0.898039, 0.470588, 1 )
-tile_set = SubResource( 7 )
+z_index = 1
+tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 

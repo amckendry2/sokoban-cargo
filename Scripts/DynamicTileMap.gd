@@ -2,7 +2,7 @@ extends TileMap
 
 func _ready():
 	pass # Replace with function body.
-	
+
 func add_tile(pos: Vector2, sprite_idx: int):
 	set_cellv(pos, sprite_idx)
 
