@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
-[ext_resource path="res://Assets/icon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/icon.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/SelectionGrid.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/BlockGrid.gd" type="Script" id=5]
 [ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=6]
@@ -80,8 +80,13 @@ __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 544, 544 )
+current = true
+zoom = Vector2( 1.5, 1.5 )
+
 [node name="SelectionGrid" type="TileMap" parent="."]
-modulate = Color( 0.607843, 1, 0.65098, 0.196078 )
+modulate = Color( 0.607843, 1, 0.65098, 0.535884 )
 z_index = 2
 tile_set = SubResource( 1 )
 format = 1
@@ -97,12 +102,11 @@ script = ExtResource( 5 )
 [node name="AnimatedBlocks" type="Node2D" parent="BlockGrid"]
 z_index = 1
 
-[node name="UpdateTimer" type="Timer" parent="BlockGrid"]
-wait_time = 0.5
+[node name="BlockMoveTimer" type="Timer" parent="BlockGrid"]
+wait_time = 0.25
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]
-visible = false
 __meta__ = {
 "_editor_description_": "Contains the grids that define what cells are \"land\""
 }
@@ -165,4 +169,4 @@ tile_data = PoolIntArray( 131085, 1, 196609, 131086, 1, 196610, 131087, 1, 19661
 script = ExtResource( 2 )
 
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
-[connection signal="timeout" from="BlockGrid/UpdateTimer" to="BlockGrid" method="animation_ended"]
+[connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]

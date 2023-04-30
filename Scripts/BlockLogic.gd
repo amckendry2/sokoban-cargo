@@ -1,4 +1,4 @@
-extends Node2D
+class_name BlockLogic extends Node2D
 
 enum BlockColor {RED, GREEN, BLUE, YELLOW}
 
@@ -15,6 +15,7 @@ static func directionToVec(direction):
 		MoveDirection.SOUTH:
 			return Vector2(0, 1)
 
+# A Block is a continuous group of cells, and a color
 # Block ::
 #   Dict
 #     { "cells" :: Set (Vector2 Int) -- Invariant: Positions must form one contiguous group

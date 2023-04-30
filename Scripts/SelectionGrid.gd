@@ -1,4 +1,4 @@
-extends "res://Scripts/DynamicTileMap.gd"
+extends DynamicTileMap
 
 func _ready():
 	$AnimationPlayer.play("Glow")

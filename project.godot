@@ -8,15 +8,32 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BlockLogic",
+"language": "GDScript",
+"path": "res://Scripts/BlockLogic.gd"
+}, {
+"base": "TileMap",
+"class": "DynamicTileMap",
+"language": "GDScript",
+"path": "res://Scripts/DynamicTileMap.gd"
+} ]
+_global_script_class_icons={
+"BlockLogic": "",
+"DynamicTileMap": ""
+}
+
 [application]
 
 config/name="Sokoban Cargo Game"
 run/main_scene="res://Scenes/Docks.tscn"
-config/icon="res://Assets/icon.png"
+config/icon="res://Assets/Textures/icon.png"
 
 [display]
 
-window/size/height=1024
+window/size/width=720
+window/size/height=720
 window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
