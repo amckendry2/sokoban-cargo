@@ -7,7 +7,7 @@
 [ext_resource path="res://Scripts/BlockGrid.gd" type="Script" id=5]
 [ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=6]
 [ext_resource path="res://Assets/Shaders/ChowderGreen.tres" type="Material" id=7]
-[ext_resource path="res://Assets/Shaders/ChowderBlue.tres" type="Material" id=8]
+[ext_resource path="res://Assets/Shaders/ChowderRed.tres" type="Material" id=8]
 [ext_resource path="res://Nodes/Background.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/LandGrids.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/TogglableTileMap.gd" type="Script" id=11]
@@ -139,7 +139,7 @@ format = 1
 tile_data = PoolIntArray( 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0 )
 script = ExtResource( 11 )
 
-[node name="BlueGrid" type="TileMap" parent="BlockGrid"]
+[node name="RedGrid" type="TileMap" parent="BlockGrid"]
 material = ExtResource( 8 )
 z_index = 1
 tile_set = ExtResource( 6 )

@@ -6,15 +6,15 @@ const animated_block_group_scene = preload("res://Scenes/AnimatedBlockGroup.tscn
 const BlockLogic = preload("res://Scripts/BlockLogic.gd")
 
 var shader_materials = {
-	BlockLogic.BlockColor.BLUE: preload("res://Assets/Shaders/ChowderBlue.tres"),
 	BlockLogic.BlockColor.GREEN: preload("res://Assets/Shaders/ChowderGreen.tres"),
-	BlockLogic.BlockColor.YELLOW: preload("res://Assets/Shaders/ChowderOrange.tres")
+	BlockLogic.BlockColor.ORANGE: preload("res://Assets/Shaders/ChowderOrange.tres"),
+	BlockLogic.BlockColor.RED: preload("res://Assets/Shaders/ChowderRed.tres")
 }
 
 var tile_color_indexes = {
 	BlockLogic.BlockColor.GREEN: 0,
-	BlockLogic.BlockColor.YELLOW: 1,
-	BlockLogic.BlockColor.BLUE: 2,
+	BlockLogic.BlockColor.ORANGE: 1,
+	BlockLogic.BlockColor.RED: 2,
 }
 
 var block_state: Dictionary = {}
@@ -40,12 +40,13 @@ func delete_block(coord: Vector2):
 
 func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	var cleared_blocks_by_color = BlockLogic.partitionTilesByColor(moved_blocks)
-	$BlueGrid.clear_blocks(cleared_blocks_by_color["blueBlocks"])
+	$RedGrid.clear_blocks(cleared_blocks_by_color["redBlocks"])
 	$GreenGrid.clear_blocks(cleared_blocks_by_color["greenBlocks"])
-	$OrangeGrid.clear_blocks(cleared_blocks_by_color["yellowBlocks"])
+	$OrangeGrid.clear_blocks(cleared_blocks_by_color["orangeBlocks"])
 
 	# TODO(Julian): Some blocks become visually disconnected while being pushed.
 	# Could be an issue in BlockLogic or with (Dynamic)TileMap
+	# TODO(Alex): This is an issue in BlockLogic
 	for block in moved_blocks:
 		var animated_block = animated_block_group_scene.instance()
 		var block_material = shader_materials[block.color]
@@ -69,14 +70,14 @@ func push_block(block_pos: Vector2, direction):
 	return pushed_data["pushSuccessful"]
 
 func update_state():
-	$BlueGrid.clear()
+	$RedGrid.clear()
 	$GreenGrid.clear()
 	$OrangeGrid.clear()
 	block_state = next_block_state
 	var color_separated_new_state = BlockLogic.partitionTilesByColor(block_state)
-	$BlueGrid.add_blocks(color_separated_new_state["blueBlocks"])
+	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
 	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
-	$OrangeGrid.add_blocks(color_separated_new_state["yellowBlocks"])
+	$OrangeGrid.add_blocks(color_separated_new_state["orangeBlocks"])
 
 func _on_BlockMoveTimer_timeout() -> void:
 	update_state()
