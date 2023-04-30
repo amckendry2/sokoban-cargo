@@ -83,6 +83,5 @@ func update_state():
 	$OrangeGrid.add_blocks(color_separated_new_state["yellowBlocks"])
 
 func _on_BlockMoveTimer_timeout() -> void:
-	print("_on_BlockMoveTimer_timeout")
 	update_state()
 	emit_signal("push_ended")

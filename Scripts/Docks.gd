@@ -1,8 +1,5 @@
 extends Node2D
 
-const animated_block_scene = preload("res://Scenes/AnimatedBlock.tscn")
-const BlockLogic = preload("res://Scripts/BlockLogic.gd")
-
 var selected: bool = false
 var ignore_input: bool = false
 
