@@ -1,6 +1,6 @@
 extends TileMap
 
-var _active: bool = false
+var _active: bool = true
 
 func set_active(active):
 	_active = active

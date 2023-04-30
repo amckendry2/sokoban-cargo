@@ -5,6 +5,18 @@ signal push_ended
 const animated_block_group_scene = preload("res://Scenes/AnimatedBlockGroup.tscn")
 const BlockLogic = preload("res://Scripts/BlockLogic.gd")
 
+var shader_materials = {
+	BlockLogic.BlockColor.BLUE: preload("res://Assets/Shaders/ChowderBlue.tres"),
+	BlockLogic.BlockColor.GREEN: preload("res://Assets/Shaders/ChowderGreen.tres"),
+	BlockLogic.BlockColor.YELLOW: preload("res://Assets/Shaders/ChowderOrange.tres")
+}
+
+var tile_color_indexes = {
+	BlockLogic.BlockColor.GREEN: 0,
+	BlockLogic.BlockColor.YELLOW: 1,
+	BlockLogic.BlockColor.BLUE: 2,
+}
+
 var block_state: Dictionary = {}
 var next_block_state: Dictionary = {}
 
@@ -36,7 +48,9 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	# Could be an issue in BlockLogic or with (Dynamic)TileMap
 	for block in moved_blocks:
 		var animated_block = animated_block_group_scene.instance()
-		animated_block.init(direction, $BlockMoveTimer)
+		var block_material = shader_materials[block.color]
+		var tile_index = tile_color_indexes[block.color]
+		animated_block.init(direction, $BlockMoveTimer, block_material, tile_index)
 		animated_block.add_block(block)
 		$AnimatedBlocks.add_child(animated_block)
 	next_block_state = new_state
