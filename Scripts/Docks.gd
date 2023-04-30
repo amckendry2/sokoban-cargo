@@ -46,7 +46,9 @@ func _process(delta):
 			else:
 				if ($BlockGrid.get_block_at_cursor(cursor_pos)):
 					start_selection()
-
+		elif(Input.is_action_just_pressed("delete_block")):
+			if($BlockGrid.get_block_at_cursor(cursor_pos)):
+				$BlockGrid.delete_block(cursor_pos)
 func start_selection():
 	selected = true
 	$SelectionGrid.hide()
