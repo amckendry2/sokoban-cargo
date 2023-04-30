@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Textures/eel_background_v2.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Shaders/chowder.gdshader" type="Shader" id=2]
+
+[resource]
+shader = ExtResource( 2 )
+shader_param/aspect_ratio = Vector2( 1, 1 )
+shader_param/u_color_key = Color( 0.752941, 0.898039, 0.835294, 1 )
+shader_param/scale = 4.0
+shader_param/move_dir = Vector2( 1, -1 )
+shader_param/move_speed = 1.0
+shader_param/background_texture = ExtResource( 1 )
