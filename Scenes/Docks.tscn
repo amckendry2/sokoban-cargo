@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -8,8 +8,7 @@
 [ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=6]
 [ext_resource path="res://Assets/Shaders/chowder.gdshader" type="Shader" id=7]
 [ext_resource path="res://Assets/Textures/eel_background_v2.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Shaders/Chowder.tres" type="Material" id=9]
-[ext_resource path="res://Assets/Textures/eel_background_v1.png" type="Texture" id=10]
+[ext_resource path="res://Nodes/Background.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -69,15 +68,6 @@ shader_param/move_dir = Vector2( 1, -1 )
 shader_param/move_speed = 1.0
 shader_param/background_texture = ExtResource( 8 )
 
-[sub_resource type="ShaderMaterial" id=10]
-shader = ExtResource( 7 )
-shader_param/aspect_ratio = Vector2( 1, 1 )
-shader_param/u_color_key = Color( 1, 0, 1, 1 )
-shader_param/scale = 2.0
-shader_param/move_dir = Vector2( 1, -1 )
-shader_param/move_speed = 1.0
-shader_param/background_texture = ExtResource( 10 )
-
 [node name="PlayGrid" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -90,6 +80,8 @@ spawn_pct = 0.75
 position = Vector2( 544, 544 )
 current = true
 zoom = Vector2( 1.5, 1.5 )
+
+[node name="Background" parent="." instance=ExtResource( 9 )]
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 modulate = Color( 0.607843, 1, 0.65098, 0.535884 )
@@ -148,35 +140,32 @@ format = 1
 tile_data = PoolIntArray( 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0 )
 
 [node name="RedGrid" type="TileMap" parent="BlockGrid"]
-material = ExtResource( 9 )
-z_index = 1
-tile_set = ExtResource( 6 )
-format = 1
-tile_data = PoolIntArray( 524304, 1, 196609, 524305, 1, 196610, 524306, 1, 196611, 720910, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 851982, 0, 0, 851983, 0, 0 )
-script = ExtResource( 2 )
-
-[node name="BlueGrid" type="TileMap" parent="BlockGrid"]
-modulate = Color( 0.74902, 0.960784, 0.466667, 1 )
 material = SubResource( 9 )
 z_index = 1
 tile_set = ExtResource( 6 )
 format = 1
-tile_data = PoolIntArray( 393232, 1, 196609, 393233, 1, 196610, 393234, 1, 196610, 393235, 1, 196611 )
+tile_data = PoolIntArray( 786447, 0, 0, 786448, 0, 0, 851982, 0, 0, 851983, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="BlueGrid" type="TileMap" parent="BlockGrid"]
+modulate = Color( 0.74902, 0.960784, 0.466667, 1 )
+z_index = 1
+tile_set = ExtResource( 6 )
+format = 1
 script = ExtResource( 2 )
 
 [node name="GreenGrid" type="TileMap" parent="BlockGrid"]
-material = SubResource( 10 )
 z_index = 1
 tile_set = ExtResource( 6 )
 format = 1
-tile_data = PoolIntArray( 262158, 1, 196609, 262159, 1, 196610, 262160, 1, 196610, 262161, 1, 196610, 262162, 1, 196610, 262163, 1, 196610, 262164, 1, 196610, 262165, 1, 196611 )
 script = ExtResource( 2 )
 
 [node name="OrangeGrid" type="TileMap" parent="BlockGrid"]
+visible = false
 z_index = 1
 tile_set = ExtResource( 6 )
 format = 1
-tile_data = PoolIntArray( 131085, 1, 196609, 131086, 1, 196610, 131087, 1, 196610, 131088, 1, 196611 )
+tile_data = PoolIntArray( 131085, 1, 196609, 131086, 1, 196610, 131087, 1, 196610, 131088, 1, 196611, 393221, 1, 196609, 393222, 1, 196610, 393223, 1, 196611 )
 script = ExtResource( 2 )
 
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]

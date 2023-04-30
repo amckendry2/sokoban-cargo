@@ -13,11 +13,13 @@ uniform float move_speed = 1.0f;
 
 void fragment() {
     vec4 col = texture(TEXTURE, UV);
+	col = col * col.a;
     vec4 d4 = abs(col - u_color_key);
     float d = max(max(d4.r, d4.g), d4.b);
-    if(d < 0.01) {
-     vec2 uv = vec2(SCREEN_UV.x, SCREEN_UV.y * aspect_ratio.x/aspect_ratio.y);
-       col = texture(background_texture, fract(1.0f - uv * vec2(scale,scale) + TIME * move_dir * move_speed/100.0f));
+	
+    if(d < 0.02) {
+      vec2 uv = vec2(SCREEN_UV.x, SCREEN_UV.y * aspect_ratio.x/aspect_ratio.y);
+      col = texture(background_texture, fract(1.0f - uv * vec2(scale,scale) + TIME * move_dir * move_speed/100.0f));
     }
     COLOR = col;
 }
