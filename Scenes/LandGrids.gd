@@ -1,5 +1,12 @@
 extends Node2D
 
+onready var boat_grids = {
+	"north": $BoatNorthGrid,
+	"south": $BoatSouthGrid,
+	"east": $BoatEastGrid,
+	"west": $BoatWestGrid,
+}
+
 func array_to_set(arr: Array):
 	var acc = {}
 	for value in arr:
@@ -7,10 +14,16 @@ func array_to_set(arr: Array):
 	return acc
 
 func get_available_land_cells():
-	var north_cells = $BoatNorthGrid.get_used_cells() if $BoatNorthGrid.is_active() else []
-	var east_cells = $BoatEastGrid.get_used_cells() if $BoatEastGrid.is_active() else []
-	var south_cells = $BoatSouthGrid.get_used_cells() if $BoatSouthGrid.is_active() else []
-	var west_cells = $BoatWestGrid.get_used_cells() if $BoatWestGrid.is_active() else []
-	var all_cells = $LandGrid.get_used_cells() + north_cells + east_cells + south_cells + west_cells
+	var all_cells = $LandGrid.get_used_cells()
+	for dir in boat_grids:
+		if boat_grids[dir].is_active():
+			all_cells += boat_grids[dir].get_used_cells()
+			
 	var set = array_to_set(all_cells)
 	return set
+
+func _on_BlockGrid_push_ended():
+	for dir in boat_grids:
+		if boat_grids[dir].is_active():
+			boat_grids[dir].is_order_fulfilled($"../../BlockGrid")
+	pass

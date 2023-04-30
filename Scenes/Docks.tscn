@@ -10,7 +10,7 @@
 [ext_resource path="res://Assets/Shaders/ChowderBlue.tres" type="Material" id=8]
 [ext_resource path="res://Nodes/Background.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/LandGrids.gd" type="Script" id=10]
-[ext_resource path="res://Scripts/TogglableTileMap.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/DockedBoatTileMap.gd" type="Script" id=11]
 [ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=12]
 
 [sub_resource type="TileSet" id=1]
@@ -164,4 +164,5 @@ format = 1
 script = ExtResource( 2 )
 
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
