@@ -1,4 +1,4 @@
-extends Node2D
+class_name BlockGrid extends Node2D
 
 signal push_ended
 
