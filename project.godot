@@ -41,6 +41,8 @@ window/stretch/aspect="keep"
 [global]
 
 view=false
+spaces=false
+indent=false
 
 [gui]
 
