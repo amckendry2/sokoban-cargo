@@ -22,14 +22,16 @@ func _ready():
 	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
 
 # move_dir: BlockLogic.MoveDirection
+func move_cursor(move_dir):
+	cursor_pos += BlockLogic.directionToVec((move_dir))
+
 func _move(move_dir):
 	if selected:
-		if $BlockGrid.can_push_block(cursor_pos, move_dir):
-			$BlockGrid.push_block(cursor_pos, move_dir)
-			ignore_input = true
-			cursor_pos += BlockLogic.directionToVec(move_dir)
+		ignore_input = true
+		if $BlockGrid.push_block(cursor_pos, move_dir):
+			move_cursor(move_dir)
 	else:
-		cursor_pos += BlockLogic.directionToVec(move_dir)
+		move_cursor(move_dir)
 	$SelectionGrid.update_tile(cursor_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -42,20 +42,17 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	next_block_state = new_state
 	$BlockMoveTimer.start()
 
-func get_block_at_cursor(cursor_pos: Vector2):
+func get_block_at_cursor(cursor_pos: Vector2) -> bool:
 	return BlockLogic.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
-
-func can_push_block(block_pos: Vector2, direction):
-	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
-	if block_data["foundBlock"] == null: false
-	var available_cells = $LandGrids.get_available_land_cells()
-	# call Alex's check function here
-	return true
 
 func push_block(block_pos: Vector2, direction):
 	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
-	var pushed_data = BlockLogic.pushBlock(direction, block_data["foundBlock"], block_data["otherBlocks"])
+	if block_data["foundBlock"] == null: return false
+	
+	var available_cells = $LandGrids.get_available_land_cells()
+	var pushed_data = BlockLogic.pushBlock(direction, block_data["foundBlock"], block_data["otherBlocks"], available_cells)
 	move_blocks(pushed_data["movedBlocks"], pushed_data["finalBlocks"], direction)
+	return pushed_data["pushSuccessful"]
 
 func update_state():
 	$BlueGrid.clear()
