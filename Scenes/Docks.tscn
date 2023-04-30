@@ -168,4 +168,5 @@ tile_set = SubResource( 7 )
 format = 1
 script = ExtResource( 2 )
 
+[connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/UpdateTimer" to="BlockGrid" method="animation_ended"]
