@@ -103,7 +103,7 @@ script = ExtResource( 5 )
 z_index = 1
 
 [node name="BlockMoveTimer" type="Timer" parent="BlockGrid"]
-wait_time = 0.25
+wait_time = 0.2
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]

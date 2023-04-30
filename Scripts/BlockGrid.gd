@@ -52,6 +52,8 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	$GreenGrid.clear_blocks(cleared_blocks_by_color["greenBlocks"])
 	$OrangeGrid.clear_blocks(cleared_blocks_by_color["yellowBlocks"])
 
+	# TODO(Julian): Some blocks become visually disconnected while being pushed.
+	# Could be an issue in BlockLogic or with (Dynamic)TileMap
 	for block in moved_blocks:
 		var animated_block = animated_block_group_scene.instance()
 		animated_block.init(direction, $BlockMoveTimer)
