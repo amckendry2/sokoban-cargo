@@ -2,12 +2,12 @@ extends Node2D
 
 signal move_finished
 
-const animated_block_scene = preload("res://AnimatedBlock.tscn")
+const animated_block_scene = preload("res://Scenes/AnimatedBlock.tscn")
 
 var animation_name: String
 
 const block_textures = [
-	preload("res://icon.png")
+	preload("res://Assets/icon.png")
 ]
 
 func _ready():

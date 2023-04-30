@@ -1,9 +1,9 @@
-extends "res://DynamicTileMap.gd"
+extends "res://Scripts/DynamicTileMap.gd"
 
 signal push_ended
 
-const animated_block_group_scene = preload("res://AnimatedBlockGroup.tscn")
-const BlockLogic = preload("res://BlockLogic.gd")
+const animated_block_group_scene = preload("res://Scenes/AnimatedBlockGroup.tscn")
+const BlockLogic = preload("res://Scripts/BlockLogic.gd")
 
 var block_state: Dictionary = {}
 var next_block_state: Dictionary = {}
