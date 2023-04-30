@@ -7,5 +7,7 @@
 shader = ExtResource( 1 )
 shader_param/aspect_ratio = Vector2( 1, 1 )
 shader_param/u_color_key = Color( 1, 0, 1, 1 )
-shader_param/tiling_scale = 2.0
+shader_param/scale = 2.0
+shader_param/move_dir = Vector2( 1, -1 )
+shader_param/move_speed = 1.0
 shader_param/background_texture = ExtResource( 2 )
