@@ -28,7 +28,6 @@ func delete_block(coord: Vector2):
 
 func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	var cleared_blocks_by_color = BlockLogic.partitionTilesByColor(moved_blocks)
-	$RedGrid.clear_blocks(cleared_blocks_by_color["redBlocks"])
 	$BlueGrid.clear_blocks(cleared_blocks_by_color["blueBlocks"])
 	$GreenGrid.clear_blocks(cleared_blocks_by_color["greenBlocks"])
 	$OrangeGrid.clear_blocks(cleared_blocks_by_color["yellowBlocks"])
@@ -59,13 +58,11 @@ func push_block(block_pos: Vector2, direction):
 	move_blocks(pushed_data["movedBlocks"], pushed_data["finalBlocks"], direction)
 
 func update_state():
-	$RedGrid.clear()
 	$BlueGrid.clear()
 	$GreenGrid.clear()
 	$OrangeGrid.clear()
 	block_state = next_block_state
 	var color_separated_new_state = BlockLogic.partitionTilesByColor(block_state)
-	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
 	$BlueGrid.add_blocks(color_separated_new_state["blueBlocks"])
 	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
 	$OrangeGrid.add_blocks(color_separated_new_state["yellowBlocks"])
