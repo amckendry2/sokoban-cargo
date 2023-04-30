@@ -154,6 +154,7 @@ static func pushBlock(direction, blockToPush, otherBlocks: Dictionary, openSpace
 		var newBlocks = otherBlocks.duplicate(true) # accumulator
 		newBlocks[blockToPush] = null
 		return {
+			"pushSuccessful": false,
 			"finalBlocks": newBlocks,
 			"movedBlocks": {}
 			}
@@ -208,6 +209,7 @@ static func pushBlock(direction, blockToPush, otherBlocks: Dictionary, openSpace
 	# Return the updated set of blocks, along with all the blocks that moved
 	# (in their unmerged form) for animation purposes.
 	return {
+		"pushSuccessful": true,
 		"finalBlocks": newBlocks,
 		"movedBlocks": movedBlocksInitAcc # original positions before move
 		}
@@ -219,11 +221,11 @@ static func isPushValid(direction, blockToPush, otherBlocks: Dictionary, openSpa
 			return isPushEastValid(blockToPush, otherBlocks, openSpaces)
 		MoveDirection.NORTH:
 			# rotate everything clockwise
-			var newBlockToPush = makeBlock(rotateCellsCW(blockToPush.cells), blockToPush.color)
-			var newOpenSpaces = rotateCellsCW(openSpaces)
+			var newBlockToPush = makeBlock(rotateCellsCCW(blockToPush.cells), blockToPush.color)
+			var newOpenSpaces = rotateCellsCCW(openSpaces)
 			var newOtherBlocks = {} # accumulator
 			for otherBlock in otherBlocks:
-				newOtherBlocks[makeBlock(rotateCellsCW(otherBlock.cells), otherBlock.color)] = null
+				newOtherBlocks[makeBlock(rotateCellsCCW(otherBlock.cells), otherBlock.color)] = null
 			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
 		MoveDirection.WEST:
 			# rotate everything 180 degrees
@@ -234,13 +236,14 @@ static func isPushValid(direction, blockToPush, otherBlocks: Dictionary, openSpa
 				newOtherBlocks[makeBlock(rotateCells180(otherBlock.cells), otherBlock.color)] = null
 			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
 		MoveDirection.SOUTH:
-			# rotate everything counterclockwise
-			var newBlockToPush = makeBlock(rotateCellsCCW(blockToPush.cells), blockToPush.color)
-			var newOpenSpaces = rotateCellsCCW(openSpaces)
+			var newBlockToPush = makeBlock(rotateCellsCW(blockToPush.cells), blockToPush.color)
+			var newOpenSpaces = rotateCellsCW(openSpaces)
 			var newOtherBlocks = {} # accumulator
 			for otherBlock in otherBlocks:
-				newOtherBlocks[makeBlock(rotateCellsCCW(otherBlock.cells), otherBlock.color)] = null
+				newOtherBlocks[makeBlock(rotateCellsCW(otherBlock.cells), otherBlock.color)] = null
 			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
+			# rotate everything counterclockwise
+			
 		_:
 			assert(false, "ERROR: Invalid direction");
 			return false # to satisfy the "type checker"
@@ -272,7 +275,7 @@ static func isPushEastValid(blockToPush, otherBlocks: Dictionary, openSpaces: Di
 	# For each y-coordinate, perform a horizontal scan.
 	for y in blockToPush_cells_y:
 		# Find right-most coordinate of the block to be pushed
-		var blockToPush_max_x = null
+		var blockToPush_max_x = -1000
 		for position in blockToPush.cells:
 			if position[1] == y:
 				blockToPush_max_x = max(blockToPush_max_x, position[0])
