@@ -1,5 +1,7 @@
 extends DynamicTileMap
 
+const BlockLogic = preload("res://Scripts/BlockLogic.gd")
+
 var _move_target: Vector2
 var _timer: Timer = null
 
