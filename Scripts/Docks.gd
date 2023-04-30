@@ -24,9 +24,12 @@ func _ready():
 # move_dir: BlockLogic.MoveDirection
 func _move(move_dir):
 	if selected:
-		$BlockGrid.push_block(cursor_pos, move_dir)
-		ignore_input = true
-	cursor_pos += BlockLogic.directionToVec(move_dir)
+		if $BlockGrid.can_push_block(cursor_pos, move_dir):
+			$BlockGrid.push_block(cursor_pos, move_dir)
+			ignore_input = true
+			cursor_pos += BlockLogic.directionToVec(move_dir)
+	else:
+		cursor_pos += BlockLogic.directionToVec(move_dir)
 	$SelectionGrid.update_tile(cursor_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,6 +58,7 @@ func start_selection():
 
 func end_selection():
 	selected = false
+	ignore_input = false
 	$SelectionGrid.show()
 
 func _on_BlockGrid_push_ended():

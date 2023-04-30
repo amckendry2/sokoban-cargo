@@ -8,43 +8,6 @@ const BlockLogic = preload("res://Scripts/BlockLogic.gd")
 var block_state: Dictionary = {}
 var next_block_state: Dictionary = {}
 
-#func initialize_state():
-#	var new_state = {}
-#	var red_block_cells = {}
-#	red_block_cells[Vector2(2, 3)] = null
-#	red_block_cells[Vector2(3, 3)] = null
-#	red_block_cells[Vector2(3, 4)] = null
-#	var red_block = {
-#		"cells": red_block_cells,
-#		"color": BlockLogic.BlockColor.RED
-#	}
-#	var green_block_cells = {}
-#	green_block_cells[Vector2(1, 2)] = null
-#	green_block_cells[Vector2(2, 2)] = null
-#	green_block_cells[Vector2(3, 2)] = null
-#	var green_block = {
-#		"cells": green_block_cells,
-#		"color": BlockLogic.BlockColor.GREEN
-#	}
-#	var yellow_block_cells = {}
-#	yellow_block_cells[Vector2(2, 4)] = null
-#	var yellow_block = {
-#		"cells": yellow_block_cells,
-#		"color": BlockLogic.BlockColor.YELLOW
-#	}
-#	var blue_block_cells = {}
-#	blue_block_cells[Vector2(3, 5)] = null
-#	var blue_block = {
-#		"cells": blue_block_cells,
-#		"color": BlockLogic.BlockColor.BLUE
-#	}
-#	new_state[red_block] = null
-#	new_state[green_block] = null
-#	new_state[yellow_block] = null
-#	new_state[blue_block] = null
-#	next_block_state = new_state
-#	update_state()
-
 func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_pct: float):
 	for x in range(x_min, x_max):
 		for y in range(y_min, y_max):
@@ -83,10 +46,15 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 func get_block_at_cursor(cursor_pos: Vector2):
 	return BlockLogic.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
 
+func can_push_block(block_pos: Vector2, direction):
+	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
+	if block_data["foundBlock"] == null: false
+	var available_cells = $LandGrids.get_available_land_cells()
+	# call Alex's check function here
+	return true
+
 func push_block(block_pos: Vector2, direction):
 	var block_data = BlockLogic.findBlockAtPosition(block_pos, block_state)
-	if block_data["foundBlock"] == null: return
-
 	var pushed_data = BlockLogic.pushBlock(direction, block_data["foundBlock"], block_data["otherBlocks"])
 	move_blocks(pushed_data["movedBlocks"], pushed_data["finalBlocks"], direction)
 
