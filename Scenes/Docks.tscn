@@ -9,7 +9,7 @@
 [ext_resource path="res://Assets/Shaders/ChowderGreen.tres" type="Material" id=7]
 [ext_resource path="res://Assets/Shaders/ChowderRed.tres" type="Material" id=8]
 [ext_resource path="res://Nodes/Background.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/LandGrids.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/LandGrids.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/DockedBoatTileMap.gd" type="Script" id=11]
 [ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=12]
 
