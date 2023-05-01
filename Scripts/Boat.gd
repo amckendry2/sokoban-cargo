@@ -2,6 +2,7 @@ extends Node2D
 
 export var direction: String
 
+var _top_left_cell: Vector2
 var _top_left_pos: Vector2
 var _blocks: Dictionary
 
@@ -15,20 +16,28 @@ var tile_color_indexes = {
 	BlockLogicAuto.BlockColor.RED: 2,
 }
 	
-func initialize(boat_order: BoatOrder, top_left_cell: Vector2):
+func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2):
+	_top_left_cell = top_left_cell
 	_top_left_pos = top_left_cell * 64 + Vector2(64, 64)
-	_blocks = boat_order._blocks
-	for block in boat_order._blocks:
+	_blocks = incoming_boat_order._blocks
+	for block in incoming_boat_order._blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]
-		var global_block = block.duplicate()
-		var local_cells = {}
-		for cell in global_block.cells:
-			local_cells[cell - top_left_cell] = null
-		tilemap.add_block({"cells": local_cells, "color": block.color})
+		add_block_to_tilemap(block, tilemap)
+	for block in outgoing_boat_order._blocks:	
+		var hint_tilemap = [$Visual/HintGreenTileMap, $Visual/HintOrangeTileMap, $Visual/HintRedTileMap][block.color]
+		add_block_to_tilemap(block, hint_tilemap)
 
+func add_block_to_tilemap(block: Dictionary, tilemap: TileMap):
+	var global_block = block.duplicate()
+	var local_cells = {}
+	for cell in global_block.cells:
+		local_cells[cell - _top_left_cell] = null
+	var local_block = {"cells": local_cells, "color": block.color}	
+	tilemap.add_block(local_block)
+	
 func _process(delta):
 	var path = $Path2D/PathFollow2D
-	path.set_offset(path.get_offset() + delta * 100)
+	path.set_offset(path.get_offset() + delta * 150)
 	position = path.position + _top_left_pos
 	rotation = path.rotation + PI / 2
 	if not docked and path.get_unit_offset() == 1:

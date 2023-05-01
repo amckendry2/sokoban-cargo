@@ -58,5 +58,5 @@ func _init(dock, top_left: Vector2):
 
 func get_color_at_cursor(cursor: Vector2):
 	var block = BlockLogicAuto.findBlockAtPosition(cursor, _blocks)
-	if not block["found_block"]: return null
-	return block["found_block"]["color"]
+	if not block["foundBlock"]: return null
+	return block["foundBlock"]["color"]

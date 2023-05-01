@@ -25,5 +25,5 @@ func get_available_land_cells():
 func _on_BlockGrid_push_ended():
 	for dir in boat_grids:
 		if boat_grids[dir].is_active():
-			boat_grids[dir].is_order_fulfilled($"../../BlockGrid")
-	pass
+			if boat_grids[dir].is_order_fulfilled($"../../BlockGrid"):
+				print("fulfilled")

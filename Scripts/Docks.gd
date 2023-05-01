@@ -64,13 +64,16 @@ func _process(delta):
 func spawn_boat():
 	var directions = BlockLogicAuto.MoveDirection
 	var boat_dir = directions.WEST#directions.values()[randi() % directions.size()]
-	var top_left_cell = $BlockGrid/LandGrids.boat_grids[boat_dir].top_left_cell_pos
-	var boat_order = BoatOrder.new(boat_dir, top_left_cell)
+	var boat_grid = $BlockGrid/LandGrids.boat_grids[boat_dir]
+	var top_left_cell = boat_grid.top_left_cell_pos
+	var incoming_boat_order = BoatOrder.new(boat_dir, top_left_cell)
+	var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell)
 	var new_boat = boat_scenes[boat_dir].instance()
-	new_boat.initialize(boat_order, top_left_cell)
+	new_boat.initialize(incoming_boat_order, outgoing_boat_order, top_left_cell)
 	new_boat.connect("docking_finished", self, "handle_docking_finished")
 	new_boat.position += top_left_cell * 64 + Vector2(64, 64)
 	self.add_child(new_boat)
+	boat_grid.current_order = outgoing_boat_order
 #	print("spawning boat: " + boat_dir)
 
 func start_selection():

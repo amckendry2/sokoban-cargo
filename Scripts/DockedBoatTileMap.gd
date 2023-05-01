@@ -18,5 +18,4 @@ func is_order_fulfilled(grid: BlockGrid) -> bool:
 		var block = grid.get_block_at_cursor(c)
 		if not block or block["color"] != current_order.get_color_at_cursor(c):
 			return false
-	
 	return true
