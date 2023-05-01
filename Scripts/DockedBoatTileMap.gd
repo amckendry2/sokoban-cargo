@@ -14,12 +14,13 @@ func is_filled():
 
 func set_active(active):
 	_active = active
-	
+
 func is_active():
 	return _active
 
 func is_order_fulfilled(grid: BlockGrid) -> bool:
 	if not current_order: return false
+
 	var cells = get_used_cells()
 	for c in cells:
 		var block = grid.get_block_at_cursor(c)

@@ -19,7 +19,7 @@ var tile_color_indexes = {
 	BlockLogicAuto.BlockColor.ORANGE: 1,
 	BlockLogicAuto.BlockColor.RED: 2,
 }
-	
+
 func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2):
 	_top_left_cell = top_left_cell
 	_top_left_pos = top_left_cell * 64 + Vector2(64, 64)
@@ -29,7 +29,7 @@ func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, 
 	for block in incoming_boat_order._blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]
 		add_block_to_tilemap(block, tilemap)
-	for block in outgoing_boat_order._blocks:	
+	for block in outgoing_boat_order._blocks:
 		var hint_tilemap = [$Visual/HintGreenTileMap, $Visual/HintOrangeTileMap, $Visual/HintRedTileMap][block.color]
 		add_block_to_tilemap(block, hint_tilemap)
 
@@ -38,7 +38,7 @@ func add_block_to_tilemap(block: Dictionary, tilemap: TileMap):
 	var local_cells = {}
 	for cell in global_block.cells:
 		local_cells[cell - _top_left_cell] = null
-	var local_block = {"cells": local_cells, "color": block.color}	
+	var local_block = {"cells": local_cells, "color": block.color}
 	tilemap.add_block(local_block)
 	
 func hide_hint():
@@ -80,7 +80,6 @@ func move_on_path(path, delta):
 	path.set_offset(path.get_offset() + delta * 150)
 	position = path.position + _top_left_pos
 	rotation = path.rotation + PI / 2
-
 
 func delete_blocks():
 	$Visual/EelGreenTileMap.clear()

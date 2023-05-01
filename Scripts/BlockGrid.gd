@@ -30,14 +30,14 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogicAuto.fuseBlocks(block_state)
 	update_state()
-	
+
 func queue_new_blocks(blocks: Dictionary):
 	if $BlockMoveTimer.time_left > 0:
 		for block in blocks:
 			next_block_state[block] = null
 	else:
 		add_new_blocks(blocks)
-		
+
 func add_new_blocks(blocks:Dictionary):
 	for block in blocks:
 		next_block_state[block] = null
