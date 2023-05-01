@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scenes/LandGrids.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/TogglableTileMap.gd" type="Script" id=11]
 [ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=12]
+[ext_resource path="res://Nodes/UI.tscn" type="PackedScene" id=13]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -78,6 +79,8 @@ current = true
 
 [node name="Background" parent="." instance=ExtResource( 9 )]
 
+[node name="UI" parent="." instance=ExtResource( 13 )]
+
 [node name="SelectionGrid" type="TileMap" parent="."]
 modulate = Color( 0.607843, 1, 0.65098, 0.535884 )
 position = Vector2( 30, 30 )
@@ -101,6 +104,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]
+visible = false
 modulate = Color( 1, 1, 1, 0.0784314 )
 script = ExtResource( 10 )
 __meta__ = {
