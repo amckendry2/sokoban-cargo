@@ -130,3 +130,7 @@ func _on_LandGrids_order_fulfilled(direction_idx):
 			$BlockGrid/LandGrids/BoatSouthGrid.set_filled(false)
 	cursor_pos = Vector2(7, 7)
 	end_selection()
+
+
+func _on_BoatSpawner_spawn_boat() -> void:
+	spawn_boat()
