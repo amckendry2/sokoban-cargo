@@ -40,19 +40,19 @@ func add_block_to_tilemap(block: Dictionary, tilemap: TileMap):
 		local_cells[cell - _top_left_cell] = null
 	var local_block = {"cells": local_cells, "color": block.color}
 	tilemap.add_block(local_block)
-	
+
 func hide_hint():
 	$Visual/MessageBubble.hide()
 	$Visual/HintRedTileMap.hide()
 	$Visual/HintOrangeTileMap.hide()
 	$Visual/HintGreenTileMap.hide()
-	
+
 func show_hint():
 	$Visual/MessageBubble.show()
 	$Visual/HintRedTileMap.show()
 	$Visual/HintOrangeTileMap.show()
 	$Visual/HintGreenTileMap.show()
-		
+
 func _process(delta):
 	if not docked:
 		var path = $EnterPath2D/PathFollow2D
@@ -74,7 +74,7 @@ func start_exit():
 	for block in _outgoing_blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]
 		add_block_to_tilemap(block, tilemap)
-	
+
 
 func move_on_path(path, delta):
 	path.set_offset(path.get_offset() + delta * 150)
@@ -85,4 +85,4 @@ func delete_blocks():
 	$Visual/EelGreenTileMap.clear()
 	$Visual/EelOrangeTileMap.clear()
 	$Visual/EelRedTileMap.clear()
-					
+

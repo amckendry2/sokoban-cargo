@@ -65,8 +65,8 @@ current = true
 [node name="Background" parent="." instance=ExtResource( 9 )]
 
 [node name="UI" parent="." instance=ExtResource( 13 )]
-z_index = 4
 pause_mode = 2
+z_index = 4
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 position = Vector2( 30, 30 )
@@ -88,7 +88,7 @@ script = ExtResource( 5 )
 z_index = 1
 
 [node name="BlockMoveTimer" type="Timer" parent="BlockGrid"]
-wait_time = 0.2
+wait_time = 0.15
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]
@@ -160,7 +160,7 @@ format = 1
 script = ExtResource( 2 )
 
 [node name="BoatSpawn" type="Timer" parent="."]
-wait_time = 25.0
+wait_time = 45.0
 autostart = true
 
 [connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
@@ -168,4 +168,5 @@ autostart = true
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
+[connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="UI" method="_on_LandGrids_order_fulfilled"]
 [connection signal="timeout" from="BoatSpawn" to="." method="spawn_boat"]

@@ -34,3 +34,7 @@ func _input(event: InputEvent) -> void:
 
 func _on_Timer_timeout() -> void:
 	game_over()
+
+
+func _on_LandGrids_order_fulfilled() -> void:
+	increment_score()

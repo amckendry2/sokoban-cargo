@@ -54,7 +54,7 @@ func delete_cells_from_blocks(cells: Dictionary):
 #		next_block_state[new_block] = null
 	next_block_state = acc
 	update_state()
-	
+
 #func delete_block(coord: Vector2):
 #	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]
 #	block_state.erase(block_to_delete)
