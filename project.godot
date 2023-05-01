@@ -19,6 +19,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/BlockLogic.gd"
 }, {
+"base": "Resource",
+"class": "BoatOrder",
+"language": "GDScript",
+"path": "res://Scripts/BoatOrder.gd"
+}, {
+"base": "TileMap",
+"class": "DockedBoatTileMap",
+"language": "GDScript",
+"path": "res://Scripts/DockedBoatTileMap.gd"
+}, {
 "base": "TileMap",
 "class": "DynamicTileMap",
 "language": "GDScript",
@@ -27,6 +37,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BlockGrid": "",
 "BlockLogic": "",
+"BoatOrder": "",
+"DockedBoatTileMap": "",
 "DynamicTileMap": ""
 }
 
@@ -35,6 +47,10 @@ _global_script_class_icons={
 config/name="Sokoban Cargo Game"
 run/main_scene="res://Scenes/Docks.tscn"
 config/icon="res://Assets/Textures/icon.png"
+
+[autoload]
+
+BlockLogicAuto="*res://Scripts/BlockLogic.gd"
 
 [display]
 
