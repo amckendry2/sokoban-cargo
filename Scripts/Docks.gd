@@ -20,6 +20,9 @@ export var grid_y_min: int = 4
 export var grid_y_max: int = 12
 export var keep_blocks_selected: bool = true
 
+var min_cursor_coordinate: int = 2
+var max_cursor_coordinate: int = 11
+
 func _ready():
 	randomize()
 	cursor_pos = cursor_start_pos
@@ -30,6 +33,17 @@ func _ready():
 # move_dir: BlockLogicAuto.MoveDirection
 func move_cursor(move_dir):
 	cursor_pos += BlockLogicAuto.directionToVec((move_dir))
+	bound_cursor_pos()
+
+func bound_cursor_pos():
+	if cursor_pos[0] < min_cursor_coordinate:
+		cursor_pos[0] = min_cursor_coordinate
+	if cursor_pos[1] < min_cursor_coordinate:
+		cursor_pos[1] = min_cursor_coordinate
+	if cursor_pos[0] > max_cursor_coordinate:
+		cursor_pos[0] = max_cursor_coordinate
+	if cursor_pos[1] > max_cursor_coordinate:
+		cursor_pos[1] = max_cursor_coordinate
 
 func _move(move_dir):
 	if selected:
