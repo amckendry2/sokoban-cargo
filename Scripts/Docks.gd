@@ -74,6 +74,7 @@ func spawn_boat():
 		new_boat.initialize(incoming_boat_cargo, outgoing_boat_order, top_left_cell)
 		new_boat.connect("docking_finished", self, "handle_docking_finished")
 		new_boat.position += top_left_cell * 64 + Vector2(64, 64)
+		$BlockGrid.connect("state_updated", new_boat, "handle_state_update")
 		self.add_child(new_boat)
 		boat_grid.current_order = outgoing_boat_order
 		boat_grid.current_boat = new_boat
