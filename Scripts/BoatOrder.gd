@@ -9,7 +9,7 @@ static func generate(dock, top_left: Vector2) -> Dictionary:
 	# Generate a blocks dict in a 2x4 grid
 	var x_len = 2 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 4
 	var y_len = 4 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 2
-
+	
 	var total_cells = 2 * 4
 
 	# Randomize colors

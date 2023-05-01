@@ -50,15 +50,8 @@ func _process(delta):
 				if ($BlockGrid.get_block_at_cursor(cursor_pos)):
 					start_selection()
 		elif(Input.is_action_just_pressed("delete_block")):
-			# TODO: Revert
-			#if($BlockGrid.get_block_at_cursor(cursor_pos)):
-			#	 $BlockGrid.delete_block(cursor_pos)
-			#var top_left = $BoatNorthGrid
-			var top_left = $BlockGrid/LandGrids/BoatNorthGrid.top_left_cell_pos
-			var order = BoatOrder.new(BlockLogicAuto.MoveDirection.NORTH, top_left)
-			print(order._blocks)
-			$BlockGrid.next_block_state = BlockLogicAuto.fuseBlocks(BlockLogicAuto.unionDicts(order._blocks, $BlockGrid.block_state))
-			$BlockGrid.update_state()
+			if($BlockGrid.get_block_at_cursor(cursor_pos)):
+				$BlockGrid.delete_block(cursor_pos)
 
 func start_selection():
 	selected = true
