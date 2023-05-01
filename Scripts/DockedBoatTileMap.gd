@@ -4,6 +4,13 @@ var current_order: BoatOrder
 var current_boat: Boat
 export var top_left_cell_pos: Vector2
 var _active: bool = false
+var _filled: bool = false
+
+func set_filled(filled):
+	_filled = filled
+
+func is_filled():
+	return _filled
 
 func set_active(active):
 	_active = active

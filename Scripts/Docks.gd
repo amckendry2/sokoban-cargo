@@ -2,9 +2,9 @@ extends Node2D
 
 const boat_scenes = {
 	BlockLogicAuto.MoveDirection.WEST: preload("res://Nodes/BoatWest.tscn"),
-	BlockLogicAuto.MoveDirection.EAST: preload("res://Nodes/BoatWest.tscn"),
-	BlockLogicAuto.MoveDirection.SOUTH: preload("res://Nodes/BoatWest.tscn"),
-	BlockLogicAuto.MoveDirection.NORTH: preload("res://Nodes/BoatWest.tscn")
+	BlockLogicAuto.MoveDirection.EAST: preload("res://Nodes/BoatEast.tscn"),
+	BlockLogicAuto.MoveDirection.SOUTH: preload("res://Nodes/BoatSouth.tscn"),
+	BlockLogicAuto.MoveDirection.NORTH: preload("res://Nodes/BoatNorth.tscn")
 }
 
 var selected: bool = false
@@ -12,7 +12,7 @@ var ignore_input: bool = false
 
 var cursor_pos: Vector2
 
-export var cursor_start_pos: Vector2 = Vector2(3, 3)
+export var cursor_start_pos: Vector2 = Vector2(7, 7)
 export var spawn_pct: float = 0.25
 export var grid_x_min: int = 4
 export var grid_x_max: int = 12
@@ -25,6 +25,8 @@ func _ready():
 	cursor_pos = cursor_start_pos
 	$SelectionGrid.update_tile(cursor_pos)
 	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
+	spawn_boat()
+	spawn_boat()
 
 # move_dir: BlockLogicAuto.MoveDirection
 func move_cursor(move_dir):
@@ -62,20 +64,21 @@ func _process(delta):
 #				$BlockGrid.delete_block(cursor_pos)
 
 func spawn_boat():
-	var directions = BlockLogicAuto.MoveDirection
-	var boat_dir = directions.WEST#directions.values()[randi() % directions.size()]
-	var boat_grid = $BlockGrid/LandGrids.boat_grids[boat_dir]
-	var top_left_cell = boat_grid.top_left_cell_pos
-	var incoming_boat_order = BoatOrder.new(boat_dir, top_left_cell)
-	var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell)
-	var new_boat = boat_scenes[boat_dir].instance()
-	new_boat.initialize(incoming_boat_order, outgoing_boat_order, top_left_cell)
-	new_boat.connect("docking_finished", self, "handle_docking_finished")
-	new_boat.position += top_left_cell * 64 + Vector2(64, 64)
-	self.add_child(new_boat)
-	boat_grid.current_order = outgoing_boat_order
-	boat_grid.current_boat = new_boat
-#	print("spawning boat: " + boat_dir)
+	var boat_dir = $BlockGrid/LandGrids.get_random_empty_dir()
+	if boat_dir != null:
+		var boat_grid = $BlockGrid/LandGrids.boat_grids[boat_dir]
+		boat_grid.set_filled(true)
+		var top_left_cell = boat_grid.top_left_cell_pos
+		var incoming_boat_order = BoatOrder.new(boat_dir, top_left_cell)
+		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell)
+		var new_boat = boat_scenes[boat_dir].instance()
+		new_boat.initialize(incoming_boat_order, outgoing_boat_order, top_left_cell)
+		new_boat.connect("docking_finished", self, "handle_docking_finished")
+		new_boat.position += top_left_cell * 64 + Vector2(64, 64)
+		self.add_child(new_boat)
+		boat_grid.current_order = outgoing_boat_order
+		boat_grid.current_boat = new_boat
+	#	print("spawning boat: " + boat_dir)
 
 func start_selection():
 	selected = true
@@ -102,18 +105,29 @@ func _on_BlockGrid_push_ended():
 func handle_docking_finished(docking_data: Dictionary):
 	$BlockGrid.queue_new_blocks(docking_data.blocks)
 	match(docking_data.direction):
-		"west": $BlockGrid/LandGrids/BoatWestGrid.set_active(true)
+		"north":
+			$BlockGrid/LandGrids/BoatNorthGrid.set_active(true)
+		"east":
+			$BlockGrid/LandGrids/BoatEastGrid.set_active(true)
+		"west":
+			$BlockGrid/LandGrids/BoatWestGrid.set_active(true)
+		"south":
+			$BlockGrid/LandGrids/BoatSouthGrid.set_active(true)
 		
 func _on_LandGrids_order_fulfilled(direction_idx):
 	var direction_strings = ["east", "north", "west", "south"]
 	match(direction_strings[direction_idx]):
 		"north":
 			$BlockGrid/LandGrids/BoatNorthGrid.set_active(false)
+			$BlockGrid/LandGrids/BoatNorthGrid.set_filled(false)
 		"east":
 			$BlockGrid/LandGrids/BoatEastGrid.set_active(false)
+			$BlockGrid/LandGrids/BoatEastGrid.set_filled(false)
 		"west":
 			$BlockGrid/LandGrids/BoatWestGrid.set_active(false)
+			$BlockGrid/LandGrids/BoatWestGrid.set_filled(false)
 		"south":
 			$BlockGrid/LandGrids/BoatSouthGrid.set_active(false)
+			$BlockGrid/LandGrids/BoatSouthGrid.set_filled(false)
 	cursor_pos = Vector2(7, 7)
 	end_selection()

@@ -9,6 +9,13 @@ onready var boat_grids = {
 	BlockLogicAuto.MoveDirection.WEST: $BoatWestGrid,
 }
 
+func get_random_empty_dir():
+	var dirs = boat_grids.keys()
+	dirs.shuffle()
+	for dir in dirs:
+		if not boat_grids[dir].is_filled(): return dir
+	return null
+
 func array_to_set(arr: Array):
 	var acc = {}
 	for value in arr:
