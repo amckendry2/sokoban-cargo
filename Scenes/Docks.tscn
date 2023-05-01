@@ -156,7 +156,7 @@ tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 
-[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
