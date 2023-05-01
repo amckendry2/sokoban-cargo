@@ -1,7 +1,5 @@
 extends Node2D
 
-const BlockLogic = preload("res://Scripts/BlockLogic.gd")
-
 var selected: bool = false
 var ignore_input: bool = false
 
@@ -21,9 +19,9 @@ func _ready():
 #	$BlockGrid.initialize_state()
 	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
 
-# move_dir: BlockLogic.MoveDirection
+# move_dir: BlockLogicAuto.MoveDirection
 func move_cursor(move_dir):
-	cursor_pos += BlockLogic.directionToVec((move_dir))
+	cursor_pos += BlockLogicAuto.directionToVec((move_dir))
 
 func _move(move_dir):
 	if selected:
@@ -38,13 +36,13 @@ func _move(move_dir):
 func _process(delta):
 	if not ignore_input:
 		if(Input.is_action_just_pressed("move_up")):
-			_move(BlockLogic.MoveDirection.NORTH)
+			_move(BlockLogicAuto.MoveDirection.NORTH)
 		elif(Input.is_action_just_pressed("move_down")):
-			_move(BlockLogic.MoveDirection.SOUTH)
+			_move(BlockLogicAuto.MoveDirection.SOUTH)
 		elif(Input.is_action_just_pressed("move_left")):
-			_move(BlockLogic.MoveDirection.WEST)
+			_move(BlockLogicAuto.MoveDirection.WEST)
 		elif(Input.is_action_just_pressed("move_right")):
-			_move(BlockLogic.MoveDirection.EAST)
+			_move(BlockLogicAuto.MoveDirection.EAST)
 		elif(Input.is_action_just_pressed("select_block")):
 			if selected:
 				end_selection()
@@ -52,8 +50,16 @@ func _process(delta):
 				if ($BlockGrid.get_block_at_cursor(cursor_pos)):
 					start_selection()
 		elif(Input.is_action_just_pressed("delete_block")):
-			if($BlockGrid.get_block_at_cursor(cursor_pos)):
-				$BlockGrid.delete_block(cursor_pos)
+			# TODO: Revert
+			#if($BlockGrid.get_block_at_cursor(cursor_pos)):
+			#	 $BlockGrid.delete_block(cursor_pos)
+			#var top_left = $BoatNorthGrid
+			var top_left = $BlockGrid/LandGrids/BoatNorthGrid.top_left_cell_pos
+			var order = BoatOrder.new(BlockLogicAuto.MoveDirection.NORTH, top_left)
+			print(order._blocks)
+			$BlockGrid.next_block_state = BlockLogicAuto.fuseBlocks(BlockLogicAuto.unionDicts(order._blocks, $BlockGrid.block_state))
+			$BlockGrid.update_state()
+
 func start_selection():
 	selected = true
 	$SelectionGrid.hide()
