@@ -157,7 +157,7 @@ format = 1
 script = ExtResource( 2 )
 
 [node name="BoatSpawn" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 25.0
 autostart = true
 
 [connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]

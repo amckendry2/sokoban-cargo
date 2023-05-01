@@ -25,6 +25,7 @@ func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, 
 	_top_left_pos = top_left_cell * 64 + Vector2(64, 64)
 	_incoming_blocks = incoming_boat_order._blocks
 	_outgoing_blocks = outgoing_boat_order._blocks
+	$Visual/MessageBubble.hide()
 	for block in incoming_boat_order._blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]
 		add_block_to_tilemap(block, tilemap)
@@ -48,7 +49,9 @@ func _process(delta):
 			delete_blocks()
 			emit_signal("docking_finished", {"direction": direction, "blocks": _incoming_blocks})
 			docked = true
+			$Visual/MessageBubble.show()
 	if exiting:
+		$Visual/MessageBubble.hide()
 		var path = $ExitPath2D/PathFollow2D
 		move_on_path(path, delta)
 		if path.get_unit_offset() == 1:

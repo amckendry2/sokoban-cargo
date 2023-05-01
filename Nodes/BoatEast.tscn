@@ -29,8 +29,8 @@ direction = "east"
 curve = SubResource( 1 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="EnterPath2D"]
-position = Vector2( 383, 709 )
-rotation = -3.13059
+position = Vector2( 578, 390 )
+rotation = 3.14133
 loop = false
 
 [node name="Visual" type="Node2D" parent="."]
@@ -99,5 +99,5 @@ curve = SubResource( 2 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="ExitPath2D"]
 position = Vector2( 0, -2 )
-rotation = -1.57339
+rotation = -1.55471
 loop = false
