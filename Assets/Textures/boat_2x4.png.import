@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileMapBlue.png-400dcacf7d4b4859487300689f788167.stex"
+path="res://.import/boat_2x4.png-7386a75c297755a74c61111301120150.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/tileMapBlue.png"
-dest_files=[ "res://.import/tileMapBlue.png-400dcacf7d4b4859487300689f788167.stex" ]
+source_file="res://Assets/Textures/boat_2x4.png"
+dest_files=[ "res://.import/boat_2x4.png-7386a75c297755a74c61111301120150.stex" ]
 
 [params]
 
