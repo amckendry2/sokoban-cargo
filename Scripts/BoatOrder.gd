@@ -16,7 +16,11 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 	var random_gen: RandomNumberGenerator = RandomNumberGenerator.new()
 	random_gen.randomize()
 
-	var color_path = _generate_random_distribution(random_gen, total_cells)
+	var color_path: Array
+	if grid:
+		color_path = _generate_from_grid(random_gen, total_cells, grid)
+	else:
+		color_path = _generate_random_distribution(random_gen, total_cells)
 
 	var color_idx = 0
 	var singleton_blocks = {}
@@ -39,7 +43,7 @@ static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: 
 	var num_green = len(colored_blocks["greenBlocks"])
 	var num_orange = len(colored_blocks["orangeBlocks"])
 	var num_red = len(colored_blocks["redBlocks"])
-	var total_in_grid = num_green + num_orange + num_red
+	var total_in_grid: float = num_green + num_orange + num_red
 
 	var green = _floori((num_green / total_in_grid) * total_cells)
 	var orange = _floori((num_orange / total_in_grid) * total_cells)

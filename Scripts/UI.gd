@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var t = time_left()
-	$TimeUI/TimeLeft.text = str(t / 60) + ":" + str(t % 60)
+	$TimeUI/TimeLeft.text = str(t / 60) + (":%02d" % (t % 60))
 
 func time_left() -> int: # in seconds
 	return int($TimeUI/Timer.time_left)
