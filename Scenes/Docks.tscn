@@ -88,6 +88,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]
+visible = false
 modulate = Color( 1, 1, 1, 0.0784314 )
 script = ExtResource( 10 )
 __meta__ = {
