@@ -12,7 +12,7 @@ var ignore_input: bool = false
 
 var cursor_pos: Vector2
 
-export var cursor_start_pos: Vector2 = Vector2(3, 3)
+export var cursor_start_pos: Vector2 = Vector2(6, 6)
 export var spawn_pct: float = 0.25
 export var grid_x_min: int = 4
 export var grid_x_max: int = 12
@@ -87,7 +87,7 @@ func end_selection():
 	$SelectionGrid.update_tile(cursor_pos)
 	$SelectionGrid.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	$SelectionGrid.show()
-	
+
 func highlight_block():
 	$SelectionGrid.clear()
 	var found_block = $BlockGrid.get_block_at_cursor(cursor_pos)
@@ -95,9 +95,9 @@ func highlight_block():
 
 func _on_BlockGrid_push_ended():
 	ignore_input = false
-	if not keep_blocks_selected: 
+	if not keep_blocks_selected:
 		end_selection()
-		
+
 func handle_docking_finished(docking_data: Dictionary):
 	$BlockGrid.queue_new_blocks(docking_data.blocks)
 	match(docking_data.direction):

@@ -248,7 +248,7 @@ static func isPushValid(direction, blockToPush, otherBlocks: Dictionary, openSpa
 				newOtherBlocks[makeBlock(rotateCellsCW(otherBlock.cells), otherBlock.color)] = null
 			return isPushEastValid(newBlockToPush, newOtherBlocks, newOpenSpaces)
 			# rotate everything counterclockwise
-			
+
 		_:
 			assert(false, "ERROR: Invalid direction");
 			return false # to satisfy the "type checker"

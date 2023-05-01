@@ -49,6 +49,7 @@ tracks/0/keys = {
 0/z_index = 0
 
 [node name="PlayGrid" type="Node2D"]
+pause_mode = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
@@ -63,6 +64,7 @@ current = true
 [node name="Background" parent="." instance=ExtResource( 9 )]
 
 [node name="UI" parent="." instance=ExtResource( 13 )]
+pause_mode = 2
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 position = Vector2( 30, 30 )
