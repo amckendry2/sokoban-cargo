@@ -42,7 +42,18 @@ func add_new_blocks(blocks:Dictionary):
 	for block in blocks:
 		next_block_state[block] = null
 	update_state()
-		
+
+func delete_cells_from_blocks(cells: Dictionary):
+	var acc = {}
+	for block in next_block_state:
+		var new_block = block.duplicate()
+		new_block.cells = BlockLogic.diffDicts(block.cells, cells)
+		if new_block.cells.size() > 0:
+			acc[new_block] = null
+#		next_block_state.erase(block)
+#		next_block_state[new_block] = null
+	next_block_state = acc
+	update_state()
 	
 #func delete_block(coord: Vector2):
 #	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]

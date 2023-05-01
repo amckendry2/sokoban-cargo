@@ -74,6 +74,7 @@ func spawn_boat():
 	new_boat.position += top_left_cell * 64 + Vector2(64, 64)
 	self.add_child(new_boat)
 	boat_grid.current_order = outgoing_boat_order
+	boat_grid.current_boat = new_boat
 #	print("spawning boat: " + boat_dir)
 
 func start_selection():
@@ -102,3 +103,17 @@ func handle_docking_finished(docking_data: Dictionary):
 	$BlockGrid.queue_new_blocks(docking_data.blocks)
 	match(docking_data.direction):
 		"west": $BlockGrid/LandGrids/BoatWestGrid.set_active(true)
+		
+func _on_LandGrids_order_fulfilled(direction_idx):
+	var direction_strings = ["east", "north", "west", "south"]
+	match(direction_strings[direction_idx]):
+		"north":
+			$BlockGrid/LandGrids/BoatNorthGrid.set_active(false)
+		"east":
+			$BlockGrid/LandGrids/BoatEastGrid.set_active(false)
+		"west":
+			$BlockGrid/LandGrids/BoatWestGrid.set_active(false)
+		"south":
+			$BlockGrid/LandGrids/BoatSouthGrid.set_active(false)
+	cursor_pos = Vector2(7, 7)
+	end_selection()

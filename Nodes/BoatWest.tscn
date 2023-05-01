@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Boat.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -15,15 +15,20 @@ _data = {
 "points": PoolVector2Array( -369.864, 1.5874, 369.864, -1.5874, -368, 755, 0, 0, 0, 0, 0, -2 )
 }
 
-[node name="BoatWest" type="Node2D"]
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 2.37841, 508.981, -2.37841, -508.981, 0, -2, 0, 0, 0, 0, -400, -523 )
+}
+
+[node name="Boat" type="Node2D"]
 z_index = 1
 script = ExtResource( 1 )
 direction = "west"
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="EnterPath2D" type="Path2D" parent="."]
 curve = SubResource( 1 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="EnterPath2D"]
 position = Vector2( -368, 755 )
 rotation = -0.0121731
 loop = false
@@ -89,3 +94,11 @@ material = ExtResource( 5 )
 tile_set = ExtResource( 4 )
 format = 1
 script = ExtResource( 2 )
+
+[node name="ExitPath2D" type="Path2D" parent="."]
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="ExitPath2D"]
+position = Vector2( 0, -2 )
+rotation = -1.57757
+loop = false

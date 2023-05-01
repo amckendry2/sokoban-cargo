@@ -63,6 +63,7 @@ current = true
 [node name="Background" parent="." instance=ExtResource( 9 )]
 
 [node name="UI" parent="." instance=ExtResource( 13 )]
+z_index = 4
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 position = Vector2( 30, 30 )
@@ -163,4 +164,5 @@ autostart = true
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
+[connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
 [connection signal="timeout" from="BoatSpawn" to="." method="spawn_boat"]
