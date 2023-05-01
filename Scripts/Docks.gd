@@ -19,7 +19,8 @@ func _ready():
 	cursor_pos = cursor_start_pos
 	$SelectionGrid.update_tile(cursor_pos)
 #	$BlockGrid.initialize_state()
-	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
+
+#	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
 
 # move_dir: BlockLogic.MoveDirection
 func move_cursor(move_dir):
@@ -36,6 +37,17 @@ func _move(move_dir):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if(Input.is_action_just_pressed("test_queue")):
+		var test_blocks = {}
+		var test_cells_1 = {}
+		test_cells_1[Vector2(5, 5)] = null
+		test_cells_1[Vector2(5, 6)] = null
+		var test_block_1 = {
+			"cells": test_cells_1,
+			"color": BlockLogic.BlockColor.GREEN
+		}
+		test_blocks[test_block_1] = null
+		$BlockGrid.queue_new_blocks(test_blocks)
 	if not ignore_input:
 		if(Input.is_action_just_pressed("move_up")):
 			_move(BlockLogic.MoveDirection.NORTH)

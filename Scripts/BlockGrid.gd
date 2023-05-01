@@ -5,6 +5,8 @@ signal push_ended
 const animated_block_group_scene = preload("res://Scenes/AnimatedBlockGroup.tscn")
 const BlockLogic = preload("res://Scripts/BlockLogic.gd")
 
+var queued_blocks: Dictionary = {}
+
 var shader_materials = {
 	BlockLogic.BlockColor.GREEN: preload("res://Assets/Shaders/ChowderGreen.tres"),
 	BlockLogic.BlockColor.ORANGE: preload("res://Assets/Shaders/ChowderOrange.tres"),
@@ -31,7 +33,20 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogic.fuseBlocks(block_state)
 	update_state()
-
+	
+func queue_new_blocks(blocks: Dictionary):
+	if $BlockMoveTimer.time_left > 0:
+		for block in blocks:
+			queued_blocks[block] = null
+	else:
+		add_new_blocks(blocks)
+		
+func add_new_blocks(blocks:Dictionary):
+	for block in blocks:
+		next_block_state[block] = null
+	update_state()
+		
+	
 func delete_block(coord: Vector2):
 	var block_to_delete = BlockLogic.findBlockAtPosition(coord, block_state)["foundBlock"]
 	block_state.erase(block_to_delete)
@@ -70,12 +85,15 @@ func update_state():
 	$RedGrid.clear()
 	$GreenGrid.clear()
 	$OrangeGrid.clear()
-	block_state = next_block_state
+	block_state = BlockLogic.fuseBlocks(next_block_state)
 	var color_separated_new_state = BlockLogic.partitionTilesByColor(block_state)
 	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
 	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
 	$OrangeGrid.add_blocks(color_separated_new_state["orangeBlocks"])
 
 func _on_BlockMoveTimer_timeout() -> void:
+	if len(queued_blocks.keys()) > 0:
+		add_new_blocks(queued_blocks)
+	queued_blocks = {}
 	update_state()
 	emit_signal("push_ended")
