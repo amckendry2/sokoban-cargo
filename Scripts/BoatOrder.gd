@@ -6,11 +6,11 @@ var _blocks: Dictionary = {} # BlockLogic.Block
 # if a cell is already occupied or the probability fails, skip
 
 static func generate(dock, top_left: Vector2) -> BoatOrder:
-	# Generate a blocks dict in a 3x4 grid
-	var x_len = 3 if (dock is BlockLogicAuto.MoveDirection.EAST or dock is BlockLogicAuto.MoveDirection.WEST) else 4
-	var y_len = 4 if (dock is BlockLogicAuto.MoveDirection.EAST or dock is BlockLogicAuto.MoveDirection.WEST) else 3
+	# Generate a blocks dict in a 2x4 grid
+	var x_len = 2 if (dock is BlockLogicAuto.MoveDirection.EAST or dock is BlockLogicAuto.MoveDirection.WEST) else 4
+	var y_len = 4 if (dock is BlockLogicAuto.MoveDirection.EAST or dock is BlockLogicAuto.MoveDirection.WEST) else 2
 
-	var total_cells = 3 * 4
+	var total_cells = 2 * 4
 
 	# Randomize colors
 	var random_gen: RandomNumberGenerator = RandomNumberGenerator.new()
