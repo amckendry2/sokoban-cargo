@@ -31,7 +31,7 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 		var increment = 1 if go_right else -1
 
 		for x in range(x_start, x_end, increment):
-			if color_idx >= total_cells: break
+			if color_idx >= len(color_path): break
 			var color = color_path[color_idx]
 			var new_singleton_block = BlockLogicAuto.makeBlock({ Vector2(x, y): null }, color)
 			singleton_blocks[new_singleton_block] = null
@@ -50,40 +50,52 @@ static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: 
 	var num_red = 0
 	for red_block in colored_blocks["redBlocks"]:
 		num_red += len(red_block.cells)
-	var total_in_grid: float = num_green + num_orange + num_red
 
-	var green = _floori((num_green / total_in_grid) * total_cells)
-	var orange = _floori((num_orange / total_in_grid) * total_cells)
-	var red = _floori((num_red / total_in_grid) * total_cells)
-
-	var color_counts = {
-		BlockLogicAuto.BlockColor.GREEN: green,
-		BlockLogicAuto.BlockColor.ORANGE: orange,
-		BlockLogicAuto.BlockColor.RED: red,
+	var board_color_counts = {
+		BlockLogicAuto.BlockColor.GREEN: num_green,
+		BlockLogicAuto.BlockColor.ORANGE: num_orange,
+		BlockLogicAuto.BlockColor.RED: num_red,
 	}
 
-	var color_list: Array
-	for color in color_counts:
-		if color_counts[color] > 0:
-			color_list.push_back(color)
+	var color_list = [
+				BlockLogicAuto.BlockColor.GREEN,
+				BlockLogicAuto.BlockColor.ORANGE,
+				BlockLogicAuto.BlockColor.RED
+			]
+	var outgoing_color_counts = {}
 
-	var color_cumulative_probabilities = [0.33, 0.66, 1.0]
-	for _unused in range(total_cells):
+	var local_color_counts = board_color_counts.duplicate(true)
+	for n in range(total_cells):
+		# count cells, make probabilities
+		var num_green_cumulative = local_color_counts[BlockLogicAuto.BlockColor.GREEN]
+		var num_orange_cumulative = num_green_cumulative +local_color_counts[BlockLogicAuto.BlockColor.ORANGE]
+		var num_red_cumulative = num_orange_cumulative +local_color_counts[BlockLogicAuto.BlockColor.RED]
+		var color_cumulative_probabilities = \
+					[ num_green_cumulative / num_red_cumulative,
+						num_orange_cumulative / num_red_cumulative,
+						num_red_cumulative / num_red_cumulative
+					]
+		# sample color from probabilities, update counts to avoid replacement
 		var rand = random_gen.randf()
 		for i in range(len(color_list)):
 			if rand <= color_cumulative_probabilities[i]:
 				var color = color_list[i]
-				if color_counts.has(color):
-					color_counts[color] += 1
+				if outgoing_color_counts.has(color):
+					outgoing_color_counts[color] += 1
 				else:
-					color_counts[color] = 1
+					outgoing_color_counts[color] = 1
+				local_color_counts[color] -= 1
 				break
 
+	var outgoing_color_counts_pairs = []
+	for color in outgoing_color_counts:
+		outgoing_color_counts_pairs.push_back({"color": color, "count": outgoing_color_counts[color]})
+	outgoing_color_counts_pairs.shuffle()
+
 	var color_path = []
-	for color in color_counts:
-		var count = color_counts[color]
-		for _unused in range(count):
-			color_path.push_back(color)
+	for pair in outgoing_color_counts_pairs:
+		for _unused in range(pair.count):
+			color_path.push_back(pair.color)
 
 	return color_path
 
