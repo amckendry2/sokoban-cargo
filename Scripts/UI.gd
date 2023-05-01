@@ -36,5 +36,5 @@ func _on_Timer_timeout() -> void:
 	game_over()
 
 
-func _on_LandGrids_order_fulfilled() -> void:
+func _on_LandGrids_order_fulfilled(_dir) -> void:
 	increment_score()

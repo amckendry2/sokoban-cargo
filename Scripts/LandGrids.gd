@@ -31,6 +31,13 @@ func get_available_land_cells():
 	var set = array_to_set(all_cells)
 	return set
 
+func are_any_boats_docked() -> bool:
+	for dir in boat_grids:
+		if boat_grids[dir].is_filled():
+			return true
+
+	return false
+
 func _on_BlockGrid_push_ended():
 	var block_grid = $"../../BlockGrid"
 	for dir in boat_grids:

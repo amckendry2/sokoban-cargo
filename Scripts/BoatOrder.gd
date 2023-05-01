@@ -10,7 +10,7 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 	var x_len = 2 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 4
 	var y_len = 4 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 2
 
-	var total_cells = 2 * 4
+	var total_cells = (2 * 4) - 2 # change this to affect how many cells are spawned
 
 	# Randomize colors
 	var random_gen: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -31,6 +31,7 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 		var increment = 1 if go_right else -1
 
 		for x in range(x_start, x_end, increment):
+			if color_idx >= total_cells: break
 			var color = color_path[color_idx]
 			var new_singleton_block = BlockLogicAuto.makeBlock({ Vector2(x, y): null }, color)
 			singleton_blocks[new_singleton_block] = null

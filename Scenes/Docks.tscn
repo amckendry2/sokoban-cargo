@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=12]
 [ext_resource path="res://Nodes/UI.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Assets/selectorTileset.tres" type="TileSet" id=14]
+[ext_resource path="res://Scripts/BoatSpawner.gd" type="Script" id=15]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Glow"
@@ -78,6 +79,9 @@ tile_index = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SelectionGrid"]
 anims/Glow = SubResource( 2 )
+
+[node name="BoatSpawner" type="Node2D" parent="."]
+script = ExtResource( 15 )
 
 [node name="BlockGrid" type="Node2D" parent="."]
 position = Vector2( 30, 30 )
@@ -159,14 +163,10 @@ tile_set = ExtResource( 6 )
 format = 1
 script = ExtResource( 2 )
 
-[node name="BoatSpawn" type="Timer" parent="."]
-wait_time = 45.0
-autostart = true
-
+[connection signal="spawn_boat" from="BoatSpawner" to="." method="_on_BoatSpawner_spawn_boat"]
 [connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="UI" method="_on_LandGrids_order_fulfilled"]
-[connection signal="timeout" from="BoatSpawn" to="." method="spawn_boat"]

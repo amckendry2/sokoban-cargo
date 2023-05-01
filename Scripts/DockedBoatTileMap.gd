@@ -24,8 +24,11 @@ func is_order_fulfilled(grid: BlockGrid) -> bool:
 	var cells = get_used_cells()
 	for c in cells:
 		var block = grid.get_block_at_cursor(c)
-		if not block or block["color"] != current_order.get_color_at_cursor(c):
+		var color = block["color"] if block != null else null
+		var expected = current_order.get_color_at_cursor(c)
+		if color != expected:
 			return false
+
 	return true
 
 func launch_boat():
