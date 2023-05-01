@@ -25,7 +25,7 @@ func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, 
 	_top_left_pos = top_left_cell * 64 + Vector2(64, 64)
 	_incoming_blocks = incoming_boat_order._blocks
 	_outgoing_blocks = outgoing_boat_order._blocks
-	$Visual/MessageBubble.hide()
+	hide_hint()
 	for block in incoming_boat_order._blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]
 		add_block_to_tilemap(block, tilemap)
@@ -41,6 +41,18 @@ func add_block_to_tilemap(block: Dictionary, tilemap: TileMap):
 	var local_block = {"cells": local_cells, "color": block.color}	
 	tilemap.add_block(local_block)
 	
+func hide_hint():
+	$Visual/MessageBubble.hide()
+	$Visual/HintRedTileMap.hide()
+	$Visual/HintOrangeTileMap.hide()
+	$Visual/HintGreenTileMap.hide()
+	
+func show_hint():
+	$Visual/MessageBubble.show()
+	$Visual/HintRedTileMap.show()
+	$Visual/HintOrangeTileMap.show()
+	$Visual/HintGreenTileMap.show()
+		
 func _process(delta):
 	if not docked:
 		var path = $EnterPath2D/PathFollow2D
@@ -49,9 +61,9 @@ func _process(delta):
 			delete_blocks()
 			emit_signal("docking_finished", {"direction": direction, "blocks": _incoming_blocks})
 			docked = true
-			$Visual/MessageBubble.show()
+			show_hint()
 	if exiting:
-		$Visual/MessageBubble.hide()
+		hide_hint()
 		var path = $ExitPath2D/PathFollow2D
 		move_on_path(path, delta)
 		if path.get_unit_offset() == 1:
