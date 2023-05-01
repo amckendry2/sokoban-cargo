@@ -14,11 +14,8 @@ func init(direction, timer: Timer, block_material, _tile_index):
 	_origin = position
 	tile_index = _tile_index
 	material = block_material
-	# TODO(Julian): use the correct chowder material
 
 func _process(_delta: float) -> void:
-	# TODO(Julian): figure out why the timer "lags" for so long at the end.
-	# It seems like the longer _timer.wait_time is, the longer the "lag".
 	var t: float = 1 - (_timer.time_left / _timer.wait_time)
 	position = _origin.linear_interpolate(_move_target, t)
 	if _timer.time_left == 0:

@@ -23,7 +23,6 @@ func add_block(block: Dictionary):
 		set_cellv(cell, tile_index)
 		update_bitmask_area(cell)
 
-
 func clear_block(block: Dictionary):
 	for cell in block["cells"]:
 		set_cellv(cell, -1)

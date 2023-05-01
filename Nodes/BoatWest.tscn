@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/Boat.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
+[ext_resource path="res://Assets/miniTileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Assets/ArtTileSet.tres" type="TileSet" id=4]
+[ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=5]
+[ext_resource path="res://Assets/Shaders/ChowderGreen.tres" type="Material" id=6]
+[ext_resource path="res://Assets/Shaders/ChowderRed.tres" type="Material" id=7]
+[ext_resource path="res://Assets/Textures/Message_Bubble.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Textures/boat_2x4.png" type="Texture" id=9]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( -369.864, 1.5874, 369.864, -1.5874, -368, 755, 0, 0, 0, 0, 0, -2 )
+}
+
+[node name="BoatWest" type="Node2D"]
+z_index = 1
+script = ExtResource( 1 )
+direction = "west"
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2( -368, 755 )
+rotation = -0.0121731
+loop = false
+
+[node name="Visual" type="Node2D" parent="."]
+position = Vector2( -37, -32 )
+
+[node name="Boat2X4" type="Sprite" parent="Visual"]
+position = Vector2( 497.812, 291.311 )
+texture = ExtResource( 9 )
+centered = false
+offset = Vector2( -497.812, -355.311 )
+
+[node name="MessageBubble" type="Sprite" parent="Visual"]
+visible = false
+position = Vector2( 256, 0 )
+rotation = 1.5708
+texture = ExtResource( 8 )
+centered = false
+
+[node name="HintRedTileMap" type="TileMap" parent="Visual"]
+position = Vector2( 160, 32 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="HintOrangeTileMap" type="TileMap" parent="Visual"]
+position = Vector2( 160, 32 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="HintGreenTileMap" type="TileMap" parent="Visual"]
+position = Vector2( 160, 32 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="EelGreenTileMap" type="TileMap" parent="Visual"]
+material = ExtResource( 6 )
+tile_set = ExtResource( 4 )
+format = 1
+script = ExtResource( 2 )
+tile_index = 0
+
+[node name="EelRedTileMap" type="TileMap" parent="Visual"]
+material = ExtResource( 7 )
+tile_set = ExtResource( 4 )
+format = 1
+script = ExtResource( 2 )
+tile_index = 2
+
+[node name="EelOrangeTileMap" type="TileMap" parent="Visual"]
+material = ExtResource( 5 )
+tile_set = ExtResource( 4 )
+format = 1
+script = ExtResource( 2 )

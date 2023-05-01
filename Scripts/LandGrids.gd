@@ -1,10 +1,10 @@
 extends Node2D
 
 onready var boat_grids = {
-	"north": $BoatNorthGrid,
-	"south": $BoatSouthGrid,
-	"east": $BoatEastGrid,
-	"west": $BoatWestGrid,
+	BlockLogicAuto.MoveDirection.NORTH: $BoatNorthGrid,
+	BlockLogicAuto.MoveDirection.SOUTH: $BoatSouthGrid,
+	BlockLogicAuto.MoveDirection.EAST: $BoatEastGrid,
+	BlockLogicAuto.MoveDirection.WEST: $BoatWestGrid,
 }
 
 func array_to_set(arr: Array):

@@ -2,7 +2,7 @@ class_name DockedBoatTileMap extends TileMap
 
 var current_order: BoatOrder
 export var top_left_cell_pos: Vector2
-var _active: bool = true
+var _active: bool = false
 
 func set_active(active):
 	_active = active

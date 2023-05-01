@@ -44,11 +44,11 @@ func add_new_blocks(blocks:Dictionary):
 	update_state()
 		
 	
-func delete_block(coord: Vector2):
-	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]
-	block_state.erase(block_to_delete)
-	next_block_state = block_state
-	update_state()
+#func delete_block(coord: Vector2):
+#	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]
+#	block_state.erase(block_to_delete)
+#	next_block_state = block_state
+#	update_state()
 
 func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	var cleared_blocks_by_color = BlockLogicAuto.partitionTilesByColor(moved_blocks)

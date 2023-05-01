@@ -1,5 +1,12 @@
 extends Node2D
 
+const boat_scenes = {
+	BlockLogicAuto.MoveDirection.WEST: preload("res://Nodes/BoatWest.tscn"),
+	BlockLogicAuto.MoveDirection.EAST: preload("res://Nodes/BoatWest.tscn"),
+	BlockLogicAuto.MoveDirection.SOUTH: preload("res://Nodes/BoatWest.tscn"),
+	BlockLogicAuto.MoveDirection.NORTH: preload("res://Nodes/BoatWest.tscn")
+}
+
 var selected: bool = false
 var ignore_input: bool = false
 
@@ -14,9 +21,9 @@ export var grid_y_max: int = 12
 export var keep_blocks_selected: bool = true
 
 func _ready():
+	randomize()
 	cursor_pos = cursor_start_pos
 	$SelectionGrid.update_tile(cursor_pos)
-#	$BlockGrid.initialize_state()
 	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
 
 # move_dir: BlockLogicAuto.MoveDirection
@@ -50,9 +57,21 @@ func _process(delta):
 			else:
 				if ($BlockGrid.get_block_at_cursor(cursor_pos)):
 					start_selection()
-		elif(Input.is_action_just_pressed("delete_block")):
-			if($BlockGrid.get_block_at_cursor(cursor_pos)):
-				$BlockGrid.delete_block(cursor_pos)
+#		elif(Input.is_action_just_pressed("delete_block")):
+#			if($BlockGrid.get_block_at_cursor(cursor_pos)):
+#				$BlockGrid.delete_block(cursor_pos)
+
+func spawn_boat():
+	var directions = BlockLogicAuto.MoveDirection
+	var boat_dir = directions.WEST#directions.values()[randi() % directions.size()]
+	var top_left_cell = $BlockGrid/LandGrids.boat_grids[boat_dir].top_left_cell_pos
+	var boat_order = BoatOrder.new(boat_dir, top_left_cell)
+	var new_boat = boat_scenes[boat_dir].instance()
+	new_boat.initialize(boat_order, top_left_cell)
+	new_boat.connect("docking_finished", self, "handle_docking_finished")
+	new_boat.position += top_left_cell * 64 + Vector2(64, 64)
+	self.add_child(new_boat)
+#	print("spawning boat: " + boat_dir)
 
 func start_selection():
 	selected = true
@@ -75,3 +94,8 @@ func _on_BlockGrid_push_ended():
 	ignore_input = false
 	if not keep_blocks_selected: 
 		end_selection()
+		
+func handle_docking_finished(docking_data: Dictionary):
+	$BlockGrid.queue_new_blocks(docking_data.blocks)
+	match(docking_data.direction):
+		"west": $BlockGrid/LandGrids/BoatWestGrid.set_active(true)
