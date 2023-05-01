@@ -163,8 +163,8 @@ script = ExtResource( 2 )
 wait_time = 45.0
 autostart = true
 
-[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
