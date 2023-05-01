@@ -30,9 +30,10 @@ func _move(move_dir):
 		ignore_input = true
 		if $BlockGrid.push_block(cursor_pos, move_dir):
 			move_cursor(move_dir)
+			$SelectionGrid.clear()
 	else:
 		move_cursor(move_dir)
-	$SelectionGrid.update_tile(cursor_pos)
+		$SelectionGrid.update_tile(cursor_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -54,14 +55,23 @@ func _process(delta):
 		elif(Input.is_action_just_pressed("delete_block")):
 			if($BlockGrid.get_block_at_cursor(cursor_pos)):
 				$BlockGrid.delete_block(cursor_pos)
+				
 func start_selection():
 	selected = true
-	$SelectionGrid.hide()
+	highlight_block()
+	$SelectionGrid.modulate = Color(0.1, 0.2, 0.9, 1.0)
 
 func end_selection():
 	selected = false
 	ignore_input = false
+	$SelectionGrid.update_tile(cursor_pos)
+	$SelectionGrid.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	$SelectionGrid.show()
+	
+func highlight_block():
+	$SelectionGrid.clear()
+	var found_block = $BlockGrid.get_block_at_cursor(cursor_pos)
+	$SelectionGrid.add_block(found_block)
 
 func _on_BlockGrid_push_ended():
 	ignore_input = false

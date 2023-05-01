@@ -67,7 +67,7 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	next_block_state = new_state
 	$BlockMoveTimer.start()
 
-func get_block_at_cursor(cursor_pos: Vector2) -> bool:
+func get_block_at_cursor(cursor_pos: Vector2) -> Dictionary:
 	return BlockLogic.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
 
 func push_block(block_pos: Vector2, direction):
