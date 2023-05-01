@@ -93,6 +93,7 @@ func update_state():
 	$RedGrid.clear()
 	$GreenGrid.clear()
 	$OrangeGrid.clear()
+	next_block_state = BlockLogic.fuseBlocks(next_block_state)
 	block_state = next_block_state
 	var color_separated_new_state = BlockLogicAuto.partitionTilesByColor(block_state)
 	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
