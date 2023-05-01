@@ -341,3 +341,23 @@ static func partitionTilesByColor(blocks: Dictionary) -> Dictionary:
 		"orangeBlocks": orangeBlocks,
 		"redBlocks": redBlocks
 		}
+
+# Given a set of blocks, count the number of cells of
+# each color.
+static func countColors(blocks: Dictionary) -> Dictionary:
+	var colored_blocks = BlockLogicAuto.partitionTilesByColor(blocks)
+	var num_green = 0
+	for green_block in colored_blocks["greenBlocks"]:
+		num_green += len(green_block.cells)
+	var num_orange = 0
+	for orange_block in colored_blocks["orangeBlocks"]:
+		num_orange += len(orange_block.cells)
+	var num_red = 0
+	for red_block in colored_blocks["redBlocks"]:
+		num_red += len(red_block.cells)
+	var color_counts = {
+		BlockLogicAuto.BlockColor.GREEN: num_green,
+		BlockLogicAuto.BlockColor.ORANGE: num_orange,
+		BlockLogicAuto.BlockColor.RED: num_red,
+	}
+	return color_counts

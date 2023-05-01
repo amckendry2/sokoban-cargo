@@ -40,22 +40,7 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 	return BlockLogicAuto.fuseBlocks(singleton_blocks)
 
 static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: int, grid: BlockGrid) -> Array:
-	var colored_blocks = BlockLogicAuto.partitionTilesByColor(grid.block_state)
-	var num_green = 0
-	for green_block in colored_blocks["greenBlocks"]:
-		num_green += len(green_block.cells)
-	var num_orange = 0
-	for orange_block in colored_blocks["orangeBlocks"]:
-		num_orange += len(orange_block.cells)
-	var num_red = 0
-	for red_block in colored_blocks["redBlocks"]:
-		num_red += len(red_block.cells)
-
-	var board_color_counts = {
-		BlockLogicAuto.BlockColor.GREEN: num_green,
-		BlockLogicAuto.BlockColor.ORANGE: num_orange,
-		BlockLogicAuto.BlockColor.RED: num_red,
-	}
+	var board_color_counts = BlockLogicAuto.countColors(grid.block_state)
 
 	var color_list = [
 				BlockLogicAuto.BlockColor.GREEN,
