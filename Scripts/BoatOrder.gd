@@ -41,9 +41,15 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 
 static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: int, grid: BlockGrid) -> Array:
 	var colored_blocks = BlockLogicAuto.partitionTilesByColor(grid.block_state)
-	var num_green = len(colored_blocks["greenBlocks"])
-	var num_orange = len(colored_blocks["orangeBlocks"])
-	var num_red = len(colored_blocks["redBlocks"])
+	var num_green = 0
+	for green_block in colored_blocks["greenBlocks"]:
+		num_green += len(green_block.cells)
+	var num_orange = 0
+	for orange_block in colored_blocks["orangeBlocks"]:
+		num_orange += len(orange_block.cells)
+	var num_red = 0
+	for red_block in colored_blocks["redBlocks"]:
+		num_red += len(red_block.cells)
 	var total_in_grid: float = num_green + num_orange + num_red
 
 	var green = _floori((num_green / total_in_grid) * total_cells)

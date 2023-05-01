@@ -1,6 +1,7 @@
 class_name BlockGrid extends Node2D
 
 signal push_ended
+signal state_updated
 
 const animated_block_group_scene = preload("res://Scenes/AnimatedBlockGroup.tscn")
 
@@ -99,6 +100,7 @@ func update_state():
 	$RedGrid.add_blocks(color_separated_new_state["redBlocks"])
 	$GreenGrid.add_blocks(color_separated_new_state["greenBlocks"])
 	$OrangeGrid.add_blocks(color_separated_new_state["orangeBlocks"])
+	emit_signal("state_updated")
 
 func _on_BlockMoveTimer_timeout() -> void:
 	update_state()
