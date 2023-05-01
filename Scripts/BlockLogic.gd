@@ -51,9 +51,13 @@ static func makeBlocks(cells: Dictionary, color) -> Dictionary:
 # Given a set of blocks, fuse adjacent blocks of the same color.
 static func fuseBlocks(blocks: Dictionary) -> Dictionary:
 	var newBlocks = {} # accumulator
-	for block in blocks:
+	var blocksToProcess = blocks.duplicate(true).keys()
+
+	while len(blocksToProcess) > 0:
+		var block = blocksToProcess.pop_back()
+
 		var mergedSomething = false
-		for newBlock in newBlocks:
+		for newBlock in newBlocks.keys():
 			var sameColor = block.color == newBlock.color
 			var areAdjacent = \
 				areContiguousCellSetsAdjacent(block.cells, newBlock.cells)
@@ -64,7 +68,7 @@ static func fuseBlocks(blocks: Dictionary) -> Dictionary:
 
 				# Replace
 				newBlocks.erase(newBlock)
-				newBlocks[mergedBlock] = null
+				blocksToProcess.push_back(mergedBlock)
 
 				mergedSomething = true
 				break

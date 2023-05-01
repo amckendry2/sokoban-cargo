@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileMapBlue.png-400dcacf7d4b4859487300689f788167.stex"
+path="res://.import/Eel_mini_green.png-5ccff1a30e5179a0cc53ef727e617c1b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/tileMapBlue.png"
-dest_files=[ "res://.import/tileMapBlue.png-400dcacf7d4b4859487300689f788167.stex" ]
+source_file="res://Assets/Textures/Eel_mini_green.png"
+dest_files=[ "res://.import/Eel_mini_green.png-5ccff1a30e5179a0cc53ef727e617c1b.stex" ]
 
 [params]
 

@@ -30,7 +30,20 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogicAuto.fuseBlocks(block_state)
 	update_state()
-
+	
+func queue_new_blocks(blocks: Dictionary):
+	if $BlockMoveTimer.time_left > 0:
+		for block in blocks:
+			next_block_state[block] = null
+	else:
+		add_new_blocks(blocks)
+		
+func add_new_blocks(blocks:Dictionary):
+	for block in blocks:
+		next_block_state[block] = null
+	update_state()
+		
+	
 func delete_block(coord: Vector2):
 	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]
 	block_state.erase(block_to_delete)
@@ -53,8 +66,8 @@ func move_blocks(moved_blocks: Dictionary, new_state: Dictionary, direction):
 	next_block_state = new_state
 	$BlockMoveTimer.start()
 
-func get_block_at_cursor(cursor_pos: Vector2) -> bool:
-	return BlockLogicAuto.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
+func get_block_at_cursor(cursor_pos: Vector2) -> Dictionary:
+	return BlockLogic.findBlockAtPosition(cursor_pos, block_state)["foundBlock"]
 
 func push_block(block_pos: Vector2, direction):
 	var block_data = BlockLogicAuto.findBlockAtPosition(block_pos, block_state)

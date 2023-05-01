@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -12,22 +12,8 @@
 [ext_resource path="res://Scripts/LandGrids.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/DockedBoatTileMap.gd" type="Script" id=11]
 [ext_resource path="res://Assets/Shaders/ChowderOrange.tres" type="Material" id=12]
-
-[sub_resource type="TileSet" id=1]
-0/name = "icon.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
+[ext_resource path="res://Nodes/UI.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Assets/selectorTileset.tres" type="TileSet" id=14]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Glow"
@@ -43,7 +29,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0.607843, 1, 0.65098, 0.196078 ), Color( 0.607843, 1, 0.65098, 0.588235 ), Color( 0.607843, 1, 0.65098, 0.196078 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="TileSet" id=8]
@@ -78,13 +64,15 @@ current = true
 
 [node name="Background" parent="." instance=ExtResource( 9 )]
 
+[node name="UI" parent="." instance=ExtResource( 13 )]
+
 [node name="SelectionGrid" type="TileMap" parent="."]
-modulate = Color( 0.607843, 1, 0.65098, 0.535884 )
 position = Vector2( 30, 30 )
 z_index = 2
-tile_set = SubResource( 1 )
+tile_set = ExtResource( 14 )
 format = 1
 script = ExtResource( 4 )
+tile_index = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SelectionGrid"]
 anims/Glow = SubResource( 2 )
@@ -101,6 +89,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="LandGrids" type="Node2D" parent="BlockGrid"]
+visible = false
 modulate = Color( 1, 1, 1, 0.0784314 )
 script = ExtResource( 10 )
 __meta__ = {
@@ -168,5 +157,6 @@ format = 1
 script = ExtResource( 2 )
 
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
