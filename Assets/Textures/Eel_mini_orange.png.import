@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/backgroundLog.png-6e2eab82b54a953443372e41c3482f8a.stex"
+path="res://.import/Eel_mini_orange.png-f237936e724c890f240d21013397bb05.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/backgroundLog.png"
-dest_files=[ "res://.import/backgroundLog.png-6e2eab82b54a953443372e41c3482f8a.stex" ]
+source_file="res://Assets/Textures/Eel_mini_orange.png"
+dest_files=[ "res://.import/Eel_mini_orange.png-f237936e724c890f240d21013397bb05.stex" ]
 
 [params]
 
