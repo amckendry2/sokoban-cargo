@@ -31,9 +31,6 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogic.fuseBlocks(block_state)
 	update_state()
-<<<<<<< Updated upstream
-
-=======
 	
 func queue_new_blocks(blocks: Dictionary):
 	if $BlockMoveTimer.time_left > 0:
@@ -48,7 +45,6 @@ func add_new_blocks(blocks:Dictionary):
 	update_state()
 		
 	
->>>>>>> Stashed changes
 func delete_block(coord: Vector2):
 	var block_to_delete = BlockLogic.findBlockAtPosition(coord, block_state)["foundBlock"]
 	block_state.erase(block_to_delete)
