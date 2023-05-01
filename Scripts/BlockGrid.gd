@@ -30,14 +30,14 @@ func spawn_random_blocks(x_min: int, y_min: int, x_max: int, y_max: int, spawn_p
 				block_state[new_block] = null
 	next_block_state = BlockLogicAuto.fuseBlocks(block_state)
 	update_state()
-	
+
 func queue_new_blocks(blocks: Dictionary):
 	if $BlockMoveTimer.time_left > 0:
 		for block in blocks:
 			next_block_state[block] = null
 	else:
 		add_new_blocks(blocks)
-		
+
 func add_new_blocks(blocks:Dictionary):
 	for block in blocks:
 		next_block_state[block] = null
@@ -54,7 +54,7 @@ func delete_cells_from_blocks(cells: Dictionary):
 #		next_block_state[new_block] = null
 	next_block_state = acc
 	update_state()
-	
+
 #func delete_block(coord: Vector2):
 #	var block_to_delete = BlockLogicAuto.findBlockAtPosition(coord, block_state)["foundBlock"]
 #	block_state.erase(block_to_delete)

@@ -68,10 +68,10 @@ func spawn_boat():
 		var boat_grid = $BlockGrid/LandGrids.boat_grids[boat_dir]
 		boat_grid.set_filled(true)
 		var top_left_cell = boat_grid.top_left_cell_pos
-		var incoming_boat_order = BoatOrder.new(boat_dir, top_left_cell)
-		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell)
+		var incoming_boat_cargo = BoatOrder.new(boat_dir, top_left_cell)
+		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell, $BlockGrid)
 		var new_boat = boat_scenes[boat_dir].instance()
-		new_boat.initialize(incoming_boat_order, outgoing_boat_order, top_left_cell)
+		new_boat.initialize(incoming_boat_cargo, outgoing_boat_order, top_left_cell)
 		new_boat.connect("docking_finished", self, "handle_docking_finished")
 		new_boat.position += top_left_cell * 64 + Vector2(64, 64)
 		self.add_child(new_boat)
@@ -90,7 +90,7 @@ func end_selection():
 	$SelectionGrid.update_tile(cursor_pos)
 	$SelectionGrid.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	$SelectionGrid.show()
-	
+
 func highlight_block():
 	$SelectionGrid.clear()
 	var found_block = $BlockGrid.get_block_at_cursor(cursor_pos)
@@ -98,9 +98,9 @@ func highlight_block():
 
 func _on_BlockGrid_push_ended():
 	ignore_input = false
-	if not keep_blocks_selected: 
+	if not keep_blocks_selected:
 		end_selection()
-		
+
 func handle_docking_finished(docking_data: Dictionary):
 	$BlockGrid.queue_new_blocks(docking_data.blocks)
 	match(docking_data.direction):
@@ -112,7 +112,7 @@ func handle_docking_finished(docking_data: Dictionary):
 			$BlockGrid/LandGrids/BoatWestGrid.set_active(true)
 		"south":
 			$BlockGrid/LandGrids/BoatSouthGrid.set_active(true)
-		
+
 func _on_LandGrids_order_fulfilled(direction_idx):
 	var direction_strings = ["east", "north", "west", "south"]
 	match(direction_strings[direction_idx]):

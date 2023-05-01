@@ -1,40 +1,75 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Fonts/Winkle-Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Textures/Boat_UI.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Textures/Time_UI.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/UI.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
 [node name="UI" type="Node2D"]
+script = ExtResource( 4 )
 
-[node name="TimeLeft" type="Label" parent="."]
-margin_left = 90.0
-margin_top = 24.5955
-margin_right = 402.615
-margin_bottom = 63.5955
+[node name="TimeUI" type="Sprite" parent="."]
+position = Vector2( 45, 45 )
+texture = ExtResource( 3 )
+
+[node name="TimeLeft" type="Label" parent="TimeUI"]
+margin_left = 45.0
+margin_top = -20.4045
+margin_right = 357.615
+margin_bottom = 18.5955
 theme = SubResource( 2 )
 custom_colors/font_color = Color( 0.992157, 0.478431, 0.0196078, 1 )
 text = "2:14"
 
-[node name="BoatCount" type="Label" parent="."]
-margin_left = 90.1743
-margin_top = 106.276
-margin_right = 407.322
-margin_bottom = 145.276
+[node name="Timer" type="Timer" parent="TimeUI"]
+wait_time = 300.0
+one_shot = true
+autostart = true
+
+[node name="BoatUI" type="Sprite" parent="."]
+position = Vector2( 45, 120 )
+texture = ExtResource( 2 )
+
+[node name="BoatCount" type="Label" parent="BoatUI"]
+margin_left = 45.1743
+margin_top = -13.724
+margin_right = 362.322
+margin_bottom = 25.276
 theme = SubResource( 2 )
 custom_colors/font_color = Color( 0.992157, 0.478431, 0.0196078, 1 )
 text = "12"
 
-[node name="TimeUi" type="Sprite" parent="."]
-position = Vector2( 45, 45 )
-texture = ExtResource( 3 )
+[node name="PauseUI" type="Node2D" parent="."]
+visible = false
+z_index = 10
 
-[node name="BoatUi" type="Sprite" parent="."]
-position = Vector2( 45, 120 )
-texture = ExtResource( 2 )
+[node name="ColorRect" type="ColorRect" parent="PauseUI"]
+margin_right = 960.0
+margin_bottom = 960.0
+color = Color( 0, 0, 0, 0.396078 )
+
+[node name="Centered" type="Node2D" parent="PauseUI"]
+position = Vector2( 480, 480 )
+
+[node name="PausedText" type="Label" parent="PauseUI/Centered"]
+margin_left = -248.0
+margin_top = -56.0
+margin_right = 76.0
+margin_bottom = 25.0
+rect_scale = Vector2( 1.5, 1.5 )
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.992157, 0.478431, 0.0196078, 1 )
+text = "Game Over
+Press R to replay"
+align = 1
+valign = 1
+
+[connection signal="timeout" from="TimeUI/Timer" to="." method="_on_Timer_timeout"]
