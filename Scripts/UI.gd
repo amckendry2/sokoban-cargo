@@ -49,6 +49,8 @@ func _process(delta: float) -> void:
 	if Intro.state != Intro.State.END:
 		_intro_proc(delta)
 		return
+	else:
+		$IntroText.visible = false
 
 	var t = time_left()
 	$TimeUI/TimeLeft.text = str(t / 60) + (":%02d" % (t % 60))
