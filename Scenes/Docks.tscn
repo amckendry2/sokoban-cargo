@@ -102,8 +102,6 @@ anims/Glow = SubResource( 2 )
 
 [node name="BoatSpawner" type="Node2D" parent="."]
 script = ExtResource( 15 )
-no_boats_wait_time = 1.0
-boats_docked_wait_time = 10.0
 
 [node name="BlockGrid" type="Node2D" parent="."]
 position = Vector2( 30, 30 )
@@ -202,8 +200,8 @@ stream = ExtResource( 19 )
 volume_db = -6.0
 
 [connection signal="spawn_boat" from="BoatSpawner" to="." method="_on_BoatSpawner_spawn_boat"]
-[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
