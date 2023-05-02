@@ -92,10 +92,10 @@ text = "Press Space to start"
 align = 1
 
 [node name="Credits" type="Label" parent="IntroText"]
-margin_left = 26.6667
-margin_top = -117.333
-margin_right = 691.667
-margin_bottom = 47.6667
+margin_left = -1.33333
+margin_top = -114.667
+margin_right = 800.667
+margin_bottom = 50.3333
 rect_scale = Vector2( 0.5, 0.5 )
 theme = SubResource( 2 )
 custom_colors/font_color = Color( 0.992157, 0.478431, 0.0196078, 1 )

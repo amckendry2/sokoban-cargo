@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Assets/SFX/sokoban-cargo-cursor-deselect-sound.wav" type="AudioStream" id=19]
 [ext_resource path="res://Assets/SFX/sokoban-cargo-move-cursor-sound.wav" type="AudioStream" id=20]
 [ext_resource path="res://Assets/SFX/sokoban-cargo-eel-movement-sound.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/Music/sokoban-cargo-boat-movement-sound.wav" type="AudioStream" id=22]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Glow"
@@ -67,7 +68,8 @@ grid_x_max = 9
 grid_y_max = 9
 
 [node name="BoatAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 18 )
+stream = ExtResource( 22 )
+volume_db = -12.0
 script = ExtResource( 17 )
 
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
