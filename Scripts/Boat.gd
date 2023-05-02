@@ -22,6 +22,9 @@ var tile_color_indexes = {
 	BlockLogicAuto.BlockColor.RED: 2,
 }
 
+func _init():
+	hide()
+
 func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2, audio: PlayCountedAudio):
 	_audio_player = audio
 	_audio_player.play_counted()
@@ -36,6 +39,9 @@ func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, 
 	for block in outgoing_boat_order._blocks:
 		var hint_tilemap = [$Visual/HintGreenTileMap, $Visual/HintOrangeTileMap, $Visual/HintRedTileMap][block.color]
 		add_block_to_tilemap(block, hint_tilemap)
+	var path = $EnterPath2D/PathFollow2D
+	position = path.position + _top_left_pos
+	rotation = path.rotation + PI / 2
 
 func add_block_to_tilemap(block: Dictionary, tilemap: TileMap):
 	var global_block = block.duplicate()
@@ -61,6 +67,7 @@ func _ready():
 	position = $EnterPath2D/PathFollow2D.position
 
 func _process(delta):
+	if not visible: show()
 	if not docked:
 		var path = $EnterPath2D/PathFollow2D
 		move_on_path(path, delta)
