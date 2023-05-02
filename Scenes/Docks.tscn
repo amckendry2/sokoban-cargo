@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -16,7 +16,8 @@
 [ext_resource path="res://Assets/selectorTileset.tres" type="TileSet" id=14]
 [ext_resource path="res://Scripts/BoatSpawner.gd" type="Script" id=15]
 [ext_resource path="res://Assets/Music/sokoban-cargo-background-music.wav" type="AudioStream" id=16]
-[ext_resource path="res://Scripts/SFXPlayer.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/PlayCountedAudio.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Music/sokoban-cargo-boat-movement-sound.wav" type="AudioStream" id=18]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Glow"
@@ -61,7 +62,8 @@ spawn_pct = 0.4
 grid_x_max = 9
 grid_y_max = 9
 
-[node name="SFXPlayer" type="Node2D" parent="."]
+[node name="BoatAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
 script = ExtResource( 17 )
 
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
@@ -94,6 +96,8 @@ anims/Glow = SubResource( 2 )
 
 [node name="BoatSpawner" type="Node2D" parent="."]
 script = ExtResource( 15 )
+no_boats_wait_time = 1.0
+boats_docked_wait_time = 10.0
 
 [node name="BlockGrid" type="Node2D" parent="."]
 position = Vector2( 30, 30 )
@@ -176,8 +180,8 @@ format = 1
 script = ExtResource( 2 )
 
 [connection signal="spawn_boat" from="BoatSpawner" to="." method="_on_BoatSpawner_spawn_boat"]
-[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="." method="_on_BlockGrid_push_ended"]
+[connection signal="push_ended" from="BlockGrid" to="." method="highlight_block"]
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]

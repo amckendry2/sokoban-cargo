@@ -99,7 +99,7 @@ func spawn_boat():
 		var incoming_boat_cargo = BoatOrder.new(boat_dir, top_left_cell)
 		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell, total_color_counts)
 		var new_boat = boat_scenes[boat_dir].instance()
-		new_boat.initialize(incoming_boat_cargo, outgoing_boat_order, top_left_cell)
+		new_boat.initialize(incoming_boat_cargo, outgoing_boat_order, top_left_cell, $BoatAudio)
 		new_boat.connect("docking_finished", self, "handle_docking_finished")
 		new_boat.position += top_left_cell * 64 + Vector2(64, 64)
 		$BlockGrid.connect("state_updated", new_boat, "handle_state_update")
@@ -132,6 +132,7 @@ func _on_BlockGrid_push_ended():
 
 func handle_docking_finished(docking_data: Dictionary):
 	$BlockGrid.queue_new_blocks(docking_data.blocks)
+	$BoatAudio.stop_counted()
 	match(docking_data.direction):
 		"north":
 			$BlockGrid/LandGrids/BoatNorthGrid.set_active(true)
