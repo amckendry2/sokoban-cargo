@@ -69,7 +69,7 @@ func game_over():
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		game_over()
-	elif event.is_action_pressed("Restart") and _paused:
+	elif event.is_action_pressed("Restart"):
 		get_tree().reload_current_scene()
 		get_tree().paused = false
 
