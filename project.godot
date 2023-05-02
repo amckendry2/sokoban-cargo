@@ -57,6 +57,7 @@ config/icon="res://Assets/Textures/icon.png"
 [autoload]
 
 BlockLogicAuto="*res://Scripts/BlockLogic.gd"
+Intro="*res://Scripts/Intro.gd"
 
 [display]
 

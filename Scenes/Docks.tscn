@@ -60,14 +60,16 @@ grid_x_max = 9
 grid_y_max = 9
 
 [node name="Camera2D" type="Camera2D" parent="."]
+pause_mode = 2
 anchor_mode = 0
 current = true
 
-[node name="Background" parent="." instance=ExtResource( 9 )]
-
-[node name="UI" parent="." instance=ExtResource( 13 )]
+[node name="UI" parent="Camera2D" instance=ExtResource( 13 )]
 pause_mode = 2
 z_index = 4
+intro_cam_pos = Vector2( -16, -1384 )
+
+[node name="Background" parent="." instance=ExtResource( 9 )]
 
 [node name="SelectionGrid" type="TileMap" parent="."]
 position = Vector2( 30, 30 )
@@ -169,4 +171,4 @@ script = ExtResource( 2 )
 [connection signal="push_ended" from="BlockGrid" to="BlockGrid/LandGrids" method="_on_BlockGrid_push_ended"]
 [connection signal="timeout" from="BlockGrid/BlockMoveTimer" to="BlockGrid" method="_on_BlockMoveTimer_timeout"]
 [connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="." method="_on_LandGrids_order_fulfilled"]
-[connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="UI" method="_on_LandGrids_order_fulfilled"]
+[connection signal="order_fulfilled" from="BlockGrid/LandGrids" to="Camera2D/UI" method="_on_LandGrids_order_fulfilled"]

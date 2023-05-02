@@ -6,9 +6,12 @@
 [node name="Background" type="Node2D"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 960.0
-margin_bottom = 960.0
+margin_left = -520.0
+margin_top = -2216.0
+margin_right = 1400.0
+margin_bottom = 1624.0
 texture = ExtResource( 2 )
+expand = true
 stretch_mode = 2
 
 [node name="Log6X6" type="Sprite" parent="."]
