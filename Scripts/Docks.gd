@@ -28,7 +28,7 @@ func _ready():
 	cursor_pos = cursor_start_pos
 	$SelectionGrid.update_tile(cursor_pos)
 	$BlockGrid.spawn_random_blocks(grid_x_min, grid_y_min, grid_x_max, grid_y_max, spawn_pct)
-	spawn_boat()
+#	spawn_boat()
 
 # move_dir: BlockLogicAuto.MoveDirection
 func move_cursor(move_dir):
