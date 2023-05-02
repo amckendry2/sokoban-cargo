@@ -81,6 +81,7 @@ position = Vector2( 840, 88 )
 texture = ExtResource( 5 )
 
 [node name="IntroText" type="Label" parent="."]
+visible = false
 margin_left = 192.0
 margin_top = 696.0
 margin_right = 583.0
