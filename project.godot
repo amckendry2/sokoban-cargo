@@ -58,6 +58,7 @@ config/icon="res://Assets/Textures/icon.png"
 
 BlockLogicAuto="*res://Scripts/BlockLogic.gd"
 Intro="*res://Scripts/Intro.gd"
+SfxPlayer="*res://Scripts/SFXPlayer.gd"
 
 [display]
 
