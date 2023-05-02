@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 	$TimeUI/TimeLeft.text = str(t / 60) + (":%02d" % (t % 60))
 
 func time_left() -> int: # in seconds
-	return int($TimeUI/Timer.time_left)
+	return int(ceil($TimeUI/Timer.time_left))
 
 func increment_score():
 	score += 1
