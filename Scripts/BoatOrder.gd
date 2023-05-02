@@ -2,10 +2,10 @@ class_name BoatOrder extends Resource
 
 var _blocks: Dictionary = {} # BlockLogic.Block
 
-func _init(dock, top_left: Vector2, grid: BlockGrid = null):
-	_blocks = generate(dock, top_left, grid)
+func _init(dock, top_left: Vector2, color_counts = null):
+	_blocks = generate(dock, top_left, color_counts)
 
-static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Dictionary:
+static func generate(dock, top_left: Vector2, color_counts = null) -> Dictionary:
 	# Generate a blocks dict in a 2x4 grid
 	var x_len = 2 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 4
 	var y_len = 4 if (dock == BlockLogicAuto.MoveDirection.EAST or dock == BlockLogicAuto.MoveDirection.WEST) else 2
@@ -17,8 +17,8 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 	random_gen.randomize()
 
 	var color_path: Array
-	if grid:
-		color_path = _generate_from_grid(random_gen, total_cells, grid)
+	if color_counts:
+		color_path = _generate_from_grid(random_gen, total_cells, color_counts)
 	else:
 		color_path = _generate_random_distribution(random_gen, total_cells)
 
@@ -39,9 +39,7 @@ static func generate(dock, top_left: Vector2, grid: BlockGrid = null) -> Diction
 
 	return BlockLogicAuto.fuseBlocks(singleton_blocks)
 
-static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: int, grid: BlockGrid) -> Array:
-	var board_color_counts = BlockLogicAuto.countColors(grid.block_state)
-
+static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: int, color_counts: Dictionary) -> Array:
 	var color_list = [
 				BlockLogicAuto.BlockColor.GREEN,
 				BlockLogicAuto.BlockColor.ORANGE,
@@ -49,7 +47,7 @@ static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: 
 			]
 	var outgoing_color_counts = {}
 
-	var local_color_counts = board_color_counts.duplicate(true)
+	var local_color_counts = color_counts.duplicate(true)
 	for n in range(total_cells):
 		# count cells, make probabilities
 		var num_green_cumulative = local_color_counts[BlockLogicAuto.BlockColor.GREEN]

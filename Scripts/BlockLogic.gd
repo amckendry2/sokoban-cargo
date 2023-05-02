@@ -361,3 +361,32 @@ static func countColors(blocks: Dictionary) -> Dictionary:
 		BlockLogicAuto.BlockColor.RED: num_red,
 	}
 	return color_counts
+
+static func nullColorCounts() -> Dictionary:
+	return {
+		BlockLogicAuto.BlockColor.GREEN: 0,
+		BlockLogicAuto.BlockColor.ORANGE: 0,
+		BlockLogicAuto.BlockColor.RED: 0
+	}
+
+# Left plus right
+static func addColorCounts(colors1: Dictionary, colors2: Dictionary) -> Dictionary:
+	var new_color_counts = {
+		BlockLogicAuto.BlockColor.GREEN: 0,
+		BlockLogicAuto.BlockColor.ORANGE: 0,
+		BlockLogicAuto.BlockColor.RED: 0
+	}
+	for color1 in colors1:
+		new_color_counts[color1] += colors1[color1]
+	for color2 in colors2:
+		new_color_counts[color2] += colors2[color2]
+	return new_color_counts
+
+# Left minus right
+static func subtractColorCounts(colors1: Dictionary, colors2: Dictionary) -> Dictionary:
+	var new_color_counts = nullColorCounts()
+	for color1 in colors1:
+		new_color_counts[color1] += colors1[color1]
+	for color2 in colors2:
+		new_color_counts[color2] -= colors2[color2]
+	return new_color_counts
