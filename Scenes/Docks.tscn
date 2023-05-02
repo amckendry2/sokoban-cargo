@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/Docks.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/DynamicTileMap.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Nodes/UI.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Assets/selectorTileset.tres" type="TileSet" id=14]
 [ext_resource path="res://Scripts/BoatSpawner.gd" type="Script" id=15]
+[ext_resource path="res://Assets/Music/sokoban-cargo-background-music.wav" type="AudioStream" id=16]
+[ext_resource path="res://Scripts/SFXPlayer.gd" type="Script" id=17]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Glow"
@@ -58,6 +60,14 @@ __meta__ = {
 spawn_pct = 0.4
 grid_x_max = 9
 grid_y_max = 9
+
+[node name="SFXPlayer" type="Node2D" parent="."]
+script = ExtResource( 17 )
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 16 )
+autoplay = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 pause_mode = 2
