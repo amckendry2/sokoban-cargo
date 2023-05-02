@@ -79,11 +79,25 @@ func _process(delta):
 func spawn_boat():
 	var boat_dir = $BlockGrid/LandGrids.get_random_empty_dir()
 	if boat_dir != null:
+		# Count colors
+		# > orders
+		var total_order_color_counts = BlockLogicAuto.nullColorCounts()
+		var boat_grids =$BlockGrid/LandGrids.boat_grids
+		for boat_dir_local in boat_grids:
+			var boat_grid = boat_grids[boat_dir_local]
+			if boat_grid.is_filled():
+				if boat_grid.current_order: # if not null
+					var order_color_counts = BlockLogicAuto.countColors(boat_grid.current_order._blocks)
+					total_order_color_counts = BlockLogicAuto.addColorCounts(total_order_color_counts, order_color_counts)
+		# > on grid
+		var grid_color_counts = BlockLogicAuto.countColors($BlockGrid.block_state)
+		var total_color_counts = BlockLogicAuto.subtractColorCounts(grid_color_counts, total_order_color_counts)
+
 		var boat_grid = $BlockGrid/LandGrids.boat_grids[boat_dir]
 		boat_grid.set_filled(true)
 		var top_left_cell = boat_grid.top_left_cell_pos
 		var incoming_boat_cargo = BoatOrder.new(boat_dir, top_left_cell)
-		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell, $BlockGrid)
+		var outgoing_boat_order = BoatOrder.new(boat_dir, top_left_cell, total_color_counts)
 		var new_boat = boat_scenes[boat_dir].instance()
 		new_boat.initialize(incoming_boat_cargo, outgoing_boat_order, top_left_cell)
 		new_boat.connect("docking_finished", self, "handle_docking_finished")

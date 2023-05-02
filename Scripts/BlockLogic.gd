@@ -341,3 +341,52 @@ static func partitionTilesByColor(blocks: Dictionary) -> Dictionary:
 		"orangeBlocks": orangeBlocks,
 		"redBlocks": redBlocks
 		}
+
+# Given a set of blocks, count the number of cells of
+# each color.
+static func countColors(blocks: Dictionary) -> Dictionary:
+	var colored_blocks = BlockLogicAuto.partitionTilesByColor(blocks)
+	var num_green = 0
+	for green_block in colored_blocks["greenBlocks"]:
+		num_green += len(green_block.cells)
+	var num_orange = 0
+	for orange_block in colored_blocks["orangeBlocks"]:
+		num_orange += len(orange_block.cells)
+	var num_red = 0
+	for red_block in colored_blocks["redBlocks"]:
+		num_red += len(red_block.cells)
+	var color_counts = {
+		BlockLogicAuto.BlockColor.GREEN: num_green,
+		BlockLogicAuto.BlockColor.ORANGE: num_orange,
+		BlockLogicAuto.BlockColor.RED: num_red,
+	}
+	return color_counts
+
+static func nullColorCounts() -> Dictionary:
+	return {
+		BlockLogicAuto.BlockColor.GREEN: 0,
+		BlockLogicAuto.BlockColor.ORANGE: 0,
+		BlockLogicAuto.BlockColor.RED: 0
+	}
+
+# Left plus right
+static func addColorCounts(colors1: Dictionary, colors2: Dictionary) -> Dictionary:
+	var new_color_counts = {
+		BlockLogicAuto.BlockColor.GREEN: 0,
+		BlockLogicAuto.BlockColor.ORANGE: 0,
+		BlockLogicAuto.BlockColor.RED: 0
+	}
+	for color1 in colors1:
+		new_color_counts[color1] += colors1[color1]
+	for color2 in colors2:
+		new_color_counts[color2] += colors2[color2]
+	return new_color_counts
+
+# Left minus right
+static func subtractColorCounts(colors1: Dictionary, colors2: Dictionary) -> Dictionary:
+	var new_color_counts = nullColorCounts()
+	for color1 in colors1:
+		new_color_counts[color1] += colors1[color1]
+	for color2 in colors2:
+		new_color_counts[color2] -= colors2[color2]
+	return new_color_counts
