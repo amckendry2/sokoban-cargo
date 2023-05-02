@@ -34,7 +34,7 @@ text = "2:14"
 
 [node name="Timer" type="Timer" parent="TimeUI"]
 pause_mode = 1
-wait_time = 300.0
+wait_time = 301.0
 one_shot = true
 autostart = true
 
