@@ -1,6 +1,4 @@
-extends Node2D
-
-class_name Boat
+class_name Boat extends Node2D
 
 export var direction: String
 
@@ -16,13 +14,17 @@ var exiting: bool = false
 
 var should_delete_blocks: bool = false
 
+var _audio_player: PlayCountedAudio = null
+
 var tile_color_indexes = {
 	BlockLogicAuto.BlockColor.GREEN: 0,
 	BlockLogicAuto.BlockColor.ORANGE: 1,
 	BlockLogicAuto.BlockColor.RED: 2,
 }
 
-func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2):
+func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2, audio: AudioStreamPlayer):
+	_audio_player = audio
+	_audio_player.play_counted()
 	_top_left_cell = top_left_cell
 	_top_left_pos = top_left_cell * 64 + Vector2(64, 64)
 	_incoming_blocks = incoming_boat_order._blocks
@@ -70,8 +72,10 @@ func _process(delta):
 		move_on_path(path, delta)
 		if path.get_unit_offset() == 1:
 			queue_free()
+			_audio_player.stop_counted()
 
 func start_exit():
+	_audio_player.play_counted()
 	exiting = true
 	for block in _outgoing_blocks:
 		var tilemap = [$Visual/EelGreenTileMap, $Visual/EelOrangeTileMap, $Visual/EelRedTileMap][block.color]

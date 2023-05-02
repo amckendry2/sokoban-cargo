@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "DynamicTileMap",
 "language": "GDScript",
 "path": "res://Scripts/DynamicTileMap.gd"
+}, {
+"base": "AudioStreamPlayer",
+"class": "PlayCountedAudio",
+"language": "GDScript",
+"path": "res://Scripts/PlayCountedAudio.gd"
 } ]
 _global_script_class_icons={
 "BlockGrid": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "Boat": "",
 "BoatOrder": "",
 "DockedBoatTileMap": "",
-"DynamicTileMap": ""
+"DynamicTileMap": "",
+"PlayCountedAudio": ""
 }
 
 [application]
@@ -58,7 +64,6 @@ config/icon="res://Assets/Textures/icon.png"
 
 BlockLogicAuto="*res://Scripts/BlockLogic.gd"
 Intro="*res://Scripts/Intro.gd"
-SfxPlayer="*res://Scripts/SFXPlayer.gd"
 
 [display]
 

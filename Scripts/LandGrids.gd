@@ -31,6 +31,14 @@ func get_available_land_cells():
 	var set = array_to_set(all_cells)
 	return set
 
+func num_boats_docked() -> int:
+	var num_docked: int = 0
+	for dir in boat_grids:
+		if boat_grids[dir].is_filled():
+			num_docked += 1
+
+	return num_docked
+
 func are_any_boats_docked() -> bool:
 	for dir in boat_grids:
 		if boat_grids[dir].is_filled():

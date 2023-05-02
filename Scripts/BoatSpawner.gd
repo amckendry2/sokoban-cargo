@@ -9,7 +9,12 @@ var _timer: float = 0
 var _override_timer = false
 
 func _process(delta: float) -> void:
-	if not $"../BlockGrid/LandGrids".are_any_boats_docked() and not _override_timer:
+	var num_docked = $"../BlockGrid/LandGrids".num_boats_docked()
+	if num_docked == 4:
+		_timer = 0
+		return
+
+	if num_docked == 0 and not _override_timer:
 		_override_timer = true
 		_timer = 0
 
