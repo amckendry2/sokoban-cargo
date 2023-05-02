@@ -53,6 +53,7 @@ static func _generate_from_grid(random_gen: RandomNumberGenerator, total_cells: 
 		var num_green_cumulative = local_color_counts[BlockLogicAuto.BlockColor.GREEN]
 		var num_orange_cumulative = num_green_cumulative +local_color_counts[BlockLogicAuto.BlockColor.ORANGE]
 		var num_red_cumulative = num_orange_cumulative +local_color_counts[BlockLogicAuto.BlockColor.RED]
+		if num_red_cumulative <= 0: break # sometimes this is zero for some reason
 		var color_cumulative_probabilities = \
 					[ num_green_cumulative / num_red_cumulative,
 						num_orange_cumulative / num_red_cumulative,
