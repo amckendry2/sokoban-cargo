@@ -57,6 +57,9 @@ func show_hint():
 	$Visual/HintOrangeTileMap.show()
 	$Visual/HintGreenTileMap.show()
 
+func _ready():
+	position = $EnterPath2D/PathFollow2D.position
+	
 func _process(delta):
 	if not docked:
 		var path = $EnterPath2D/PathFollow2D
