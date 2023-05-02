@@ -32,8 +32,10 @@ func _ready():
 
 # move_dir: BlockLogicAuto.MoveDirection
 func move_cursor(move_dir):
+	var before_cursor_pos = Vector2(cursor_pos)
 	cursor_pos += BlockLogicAuto.directionToVec((move_dir))
 	bound_cursor_pos()
+	return before_cursor_pos != cursor_pos
 
 func bound_cursor_pos():
 	if cursor_pos[0] < min_cursor_coordinate:
@@ -49,11 +51,15 @@ func _move(move_dir):
 	if selected:
 		ignore_input = true
 		if $BlockGrid.push_block(cursor_pos, move_dir):
-			move_cursor(move_dir)
+			var moved = move_cursor(move_dir)
 			$SelectionGrid.clear()
+			if (moved):
+				$MoveEelAudio.play()
 	else:
-		move_cursor(move_dir)
+		var moved = move_cursor(move_dir)
 		$SelectionGrid.update_tile(cursor_pos)
+		if (moved):
+			$MoveCursorAudio.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -112,6 +118,7 @@ func start_selection():
 	selected = true
 	highlight_block()
 	$SelectionGrid.modulate = Color(0.1, 0.2, 0.9, 1.0)
+	$SelectCursorAudio.play()
 
 func end_selection():
 	selected = false
@@ -119,6 +126,7 @@ func end_selection():
 	$SelectionGrid.update_tile(cursor_pos)
 	$SelectionGrid.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	$SelectionGrid.show()
+	$DeselectCursorAudio.play()
 
 func highlight_block():
 	$SelectionGrid.clear()

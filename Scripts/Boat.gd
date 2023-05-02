@@ -22,7 +22,7 @@ var tile_color_indexes = {
 	BlockLogicAuto.BlockColor.RED: 2,
 }
 
-func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2, audio: AudioStreamPlayer):
+func initialize(incoming_boat_order: BoatOrder, outgoing_boat_order: BoatOrder, top_left_cell: Vector2, audio: PlayCountedAudio):
 	_audio_player = audio
 	_audio_player.play_counted()
 	_top_left_cell = top_left_cell
